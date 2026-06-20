@@ -1,5 +1,7 @@
 package gestor;
 import modelo.*;
+import util.Colores;
+
 import java.util.ArrayList;
 
 public class GestorTareas {
@@ -16,7 +18,6 @@ public class GestorTareas {
 
     public void agregarTarea(Tarea tarea) {
         tareas.add(tarea);
-        System.out.println("modelo.Tarea agregada correctamente.");
     }
 
     public void agregarUsuario(Usuario usuario) {
@@ -85,13 +86,15 @@ public class GestorTareas {
     }
 
     public void listarCategorias() {
-        for (Categoria categoria : categorias)
-            System.out.println(categoria);
+        for (Categoria categoria : categorias) {
+            System.out.println(Colores.INFO + categoria + Colores.RESET);
+            System.out.println("------------");
+        }
     }
 
     public void listarTareas() {
         for (Tarea tarea : tareas) {
-            System.out.println(tarea);
+            System.out.println(Colores.INFO + tarea + Colores.RESET);
             System.out.println("------------");
         }
     }

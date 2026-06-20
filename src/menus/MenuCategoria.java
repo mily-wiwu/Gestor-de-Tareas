@@ -2,7 +2,7 @@ package menus;
 
 import gestor.*;
 import modelo.*;
-
+import util.*;
 import java.util.Scanner;
 
 public class MenuCategoria {
@@ -17,40 +17,44 @@ public class MenuCategoria {
     public void menuCategoria() {
         int opcion;
         do {
-            System.out.println("---MENU DE CATEGORIA---");
-            System.out.println("1. Crear categoria");
-            System.out.println("2. Salir");
+            System.out.println(Colores.TITULO + "---MENU DE CATEGORIA---" + Colores.RESET);
+            System.out.println(Colores.MENU + "1. Crear categoria" + Colores.RESET);
+            System.out.println(Colores.MENU + "2. Salir" + Colores.RESET);
 
-            System.out.print("\nIngrese una opcion: ");
+            System.out.print(Colores.INGRESO + "\nIngrese una opcion: " + Colores.RESET);
             opcion = tcld.nextInt();
             tcld.nextLine();
 
             switch (opcion) {
                 case 1:
                     crearCategoria();
-                    break;
+                    return;
 
                 case 2:
-                    System.out.println("SALIENDO...");
-                    break;
+                    System.out.println(Colores.INFO + "SALIENDO..." + Colores.RESET);
+                    System.out.println(" ");
+                    return;
 
                 default:
-                    System.out.println("Opcion no valida");
+                    System.out.println(Colores.ERROR + "Opcion no valida" + Colores.RESET);
+                    System.out.println(" ");
+                    break;
             }
         }while (opcion!=2);
     }
 
     public void crearCategoria(){
-        System.out.print("Ingrese el ID de la categoria: ");
+        System.out.print(Colores.INGRESO + "Ingrese el ID de la categoria: " + Colores.RESET);
         int idCategoria = tcld.nextInt();
         tcld.nextLine();
-        System.out.print("Ingrese el nombre de la categoria: ");
+        System.out.print(Colores.INGRESO + "Ingrese el nombre de la categoria: " + Colores.RESET);
         String nombre = tcld.nextLine();
-        System.out.print("Ingrese una descripcion breve de la categoria: ");
+        System.out.print(Colores.INGRESO + "Ingrese una descripcion breve de la categoria: " + Colores.RESET);
         String descripcion = tcld.nextLine();
 
         Categoria categoria = new Categoria(idCategoria, nombre, descripcion);
         gestor.agregarCategoria(categoria);
-        System.out.println("modelo.Categoria creada correctamente");
+        System.out.println(Colores.EXITO + "Categoria creada correctamente" + Colores.RESET);
+        System.out.println(" ");
     }
 }

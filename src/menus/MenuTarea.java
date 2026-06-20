@@ -2,7 +2,7 @@ package menus;
 
 import gestor.GestorTareas;
 import modelo.*;
-
+import util.*;
 import java.time.LocalDate;
 import java.util.Scanner;
 
@@ -18,77 +18,80 @@ public class MenuTarea {
     public void menuTarea() {
         int opcion;
         do {
-            System.out.println("---MENU DE TAREA---");
-            System.out.println("1. Crear tarea");
-            System.out.println("2. Modificar tarea");
-            System.out.println("3. Eliminar tarea");
-            System.out.println("4. Asignar tarea");
-            System.out.println("5. Eliminar asignacion");
-            System.out.println("6. Empezar tarea");
-            System.out.println("7. Completar tarea");
-            System.out.println("8. Cancelar tarea");
-            System.out.println("9. Salir");
-            System.out.print("\nIngrese una opcion: ");
+            System.out.println(Colores.TITULO + "---MENU DE TAREA---" + Colores.RESET);
+            System.out.println(Colores.MENU + "1. Crear tarea" + Colores.RESET);
+            System.out.println(Colores.MENU + "2. Modificar tarea" + Colores.RESET);
+            System.out.println(Colores.MENU + "3. Eliminar tarea" + Colores.RESET);
+            System.out.println(Colores.MENU + "4. Asignar tarea" + Colores.RESET);
+            System.out.println(Colores.MENU + "5. Eliminar asignacion" + Colores.RESET);
+            System.out.println(Colores.MENU + "6. Empezar tarea" + Colores.RESET);
+            System.out.println(Colores.MENU + "7. Completar tarea" + Colores.RESET);
+            System.out.println(Colores.MENU + "8. Cancelar tarea" + Colores.RESET);
+            System.out.println(Colores.MENU + "9. Salir" + Colores.RESET);
+            System.out.print(Colores.INGRESO + "\nIngrese una opcion: " + Colores.RESET);
             opcion = tcld.nextInt();
             tcld.nextLine();
 
             switch (opcion) {
                 case 1:
                     crearTarea();
-                    break;
+                    return;
                 case 2:
                     modificarTarea();
-                    break;
+                    return;
                 case 3:
                     eliminacionTarea();
-                    break;
+                    return;
                 case 4:
                     asignacionTarea();
-                    break;
+                    return;
                 case 5:
                     eliminarAsignacion();
-                    break;
+                    return;
                 case 6:
                     empezarTarea();
-                    break;
+                    return;
                 case 7:
                     completarTarea();
-                    break;
+                    return;
                 case 8:
                     cancelarTarea();
-                    break;
+                    return;
                 case 9:
-                    System.out.println("SALIENDO...");
-                    break;
+                    System.out.println(Colores.INFO + "SALIENDO..." + Colores.RESET);
+                    System.out.println(" ");
+                    return;
                 default:
-                    System.out.println("Opcion no valida");
+                    System.out.println(Colores.ERROR + "Opcion no valida" + Colores.RESET);
+                    System.out.println(" ");
+                    break;
             }
         }while(opcion!=9);
     }
 
     public void crearTarea() {
-        System.out.print("Ingrese el ID de la tarea: ");
+        System.out.print(Colores.INGRESO + "Ingrese el ID de la tarea: " + Colores.RESET);
         int idTarea = tcld.nextInt();
         tcld.nextLine();
-        System.out.print("Ingrese el titulo de la tarea: ");
+        System.out.print(Colores.INGRESO + "Ingrese el titulo de la tarea: " + Colores.RESET);
         String titulo = tcld.nextLine();
-        System.out.print("Ingrese una descripcion de la tarea: ");
+        System.out.print(Colores.INGRESO + "Ingrese una descripcion de la tarea: " + Colores.RESET);
         String descripcion = tcld.nextLine();
         LocalDate fechaCreacion = LocalDate.now();
-        System.out.print("Ingrese el dia limite: ");
+        System.out.print(Colores.INGRESO + "Ingrese el dia limite: " + Colores.RESET);
         int diaLimite = tcld.nextInt();
-        System.out.print("Ingrese el mes limite: ");
+        System.out.print(Colores.INGRESO + "Ingrese el mes limite: " + Colores.RESET);
         int mesLimite = tcld.nextInt();
-        System.out.print("Ingrese el anio limite: ");
+        System.out.print(Colores.INGRESO + "Ingrese el anio limite: " + Colores.RESET);
         int anioLimite = tcld.nextInt();
         tcld.nextLine();
         LocalDate fechaLimite = LocalDate.of(anioLimite, mesLimite, diaLimite);
         EstadoTarea estadoInicial = EstadoTarea.PENDIENTE;
-        System.out.print("Ingrese la prioridad (Baja, Media, Alta): ");
+        System.out.print(Colores.INGRESO + "Ingrese la prioridad (Baja, Media, Alta): " + Colores.RESET);
         String prioridad = tcld.nextLine().toUpperCase();
         while (!prioridad.equals("ALTA") && !prioridad.equals("MEDIA") && !prioridad.equals("BAJA")){
-            System.out.println("ERROR! La prioridad debe ser baja, media o alta");
-            System.out.print("Ingrese la prioridad (Baja, Media, Alta): ");
+            System.out.println(Colores.ERROR + "ERROR! La prioridad debe ser baja, media o alta" + Colores.RESET);
+            System.out.print(Colores.INGRESO + "Ingrese la prioridad (Baja, Media, Alta): " + Colores.RESET);
             prioridad = tcld.nextLine();
         }
         Prioridad prioridadEnum;
@@ -99,69 +102,71 @@ public class MenuTarea {
         } else {
             prioridadEnum = Prioridad.BAJA;
         }
-        System.out.println("CATEGORIAS");
+        System.out.println(Colores.TITULO + "CATEGORIAS" + Colores.RESET);
         gestor.listarCategorias();
         Categoria categoriaSeleccionada = null;
         while (categoriaSeleccionada==null) {
-            System.out.print("Ingrese el ID una categoria: ");
+            System.out.print(Colores.INGRESO + "Ingrese el ID una categoria: " + Colores.RESET);
             int idCategoria = tcld.nextInt();
             tcld.nextLine();
             Categoria categoriaEncontrada = gestor.buscarCategoria(idCategoria);
             if (categoriaEncontrada!= null) {
                 categoriaSeleccionada = categoriaEncontrada;
             } else {
-                System.out.println("La categoria no existe");
+                System.out.println(Colores.ERROR + "La categoria no existe" + Colores.RESET);
+                System.out.println(" ");
             }
         }
 
         Tarea tarea = new Tarea(idTarea, titulo, descripcion, fechaCreacion, fechaLimite, estadoInicial, prioridadEnum, categoriaSeleccionada);
         gestor.agregarTarea(tarea);
-        System.out.println("modelo.Tarea creada exitosamente");
+        System.out.println(Colores.EXITO + "Tarea creada exitosamente" + Colores.RESET);
+        System.out.println(" ");
     }
 
     public void modificarTarea() {
-        System.out.println("MODIFICACIONES");
-        System.out.println("1. Titulo");
-        System.out.println("2. Descripcion");
-        System.out.println("3. Fecha Limite");
-        System.out.println("4. modelo.Prioridad");
-        System.out.println("5. modelo.Categoria");
-        System.out.print("Que desea modificar?: ");
+        System.out.println(Colores.TITULO + "MODIFICACIONES" + Colores.RESET);
+        System.out.println(Colores.MENU + "1. Titulo" + Colores.RESET);
+        System.out.println(Colores.MENU + "2. Descripcion" + Colores.RESET);
+        System.out.println(Colores.MENU + "3. Fecha Limite" + Colores.RESET);
+        System.out.println(Colores.MENU + "4. Prioridad" + Colores.RESET);
+        System.out.println(Colores.MENU + "5. Categoria" + Colores.RESET);
+        System.out.print(Colores.INGRESO + "\nQue desea modificar?: " + Colores.RESET);
         int opModificar = tcld.nextInt();
         tcld.nextLine();
-        System.out.print("Ingrese el ID de la tarea a modificar: ");
+        System.out.print(Colores.INGRESO + "Ingrese el ID de la tarea a modificar: " + Colores.RESET);
         int idTarea = tcld.nextInt();
         tcld.nextLine();
         Tarea tareaEncontrada = gestor.buscarTarea(idTarea);
         if (tareaEncontrada!=null) {
             switch (opModificar) {
                 case 1:
-                    System.out.print("Ingrese el nuevo titulo: ");
+                    System.out.print(Colores.INGRESO + "Ingrese el nuevo titulo: " + Colores.RESET);
                     String titulo = tcld.nextLine();
                     tareaEncontrada.setTitulo(titulo);
                     break;
                 case 2:
-                    System.out.print("Ingrese la nueva descripcion: ");
+                    System.out.print(Colores.INGRESO + "Ingrese la nueva descripcion: " + Colores.RESET);
                     String descripcion = tcld.nextLine();
                     tareaEncontrada.setDescripcion(descripcion);
                     break;
                 case 3:
-                    System.out.print("Ingrese el nuevo dia limite: ");
+                    System.out.print(Colores.INGRESO + "Ingrese el nuevo dia limite: " + Colores.RESET);
                     int diaLimite = tcld.nextInt();
-                    System.out.print("Ingrese el nuevo mes limite: ");
+                    System.out.print(Colores.INGRESO + "Ingrese el nuevo mes limite: " + Colores.RESET);
                     int mesLimite = tcld.nextInt();
-                    System.out.print("Ingrese el nuevo anio limite: ");
+                    System.out.print(Colores.INGRESO + "Ingrese el nuevo anio limite: " + Colores.RESET);
                     int anioLimite = tcld.nextInt();
                     tcld.nextLine();
                     LocalDate fechaLimite = LocalDate.of(anioLimite,mesLimite, diaLimite);
                     tareaEncontrada.setFechaLimite(fechaLimite);
                     break;
                 case 4:
-                    System.out.print("Ingrese la nueva prioridad (Alta, media baja): ");
+                    System.out.print(Colores.INGRESO + "Ingrese la nueva prioridad (Alta, media baja): " + Colores.RESET);
                     String prioridad = tcld.nextLine().toUpperCase();
                     while (!prioridad.equals("ALTA") && !prioridad.equals("MEDIA") && !prioridad.equals("BAJA")){
-                        System.out.println("ERROR! La prioridad debe ser baja, media o alta");
-                        System.out.print("Ingrese la prioridad (Baja, Media, Alta): ");
+                        System.out.println(Colores.ERROR + "ERROR! La prioridad debe ser baja, media o alta" + Colores.RESET);
+                        System.out.print(Colores.INGRESO + "Ingrese la prioridad (Baja, Media, Alta): " + Colores.RESET);
                         prioridad = tcld.nextLine().toUpperCase();
                     }
 
@@ -177,116 +182,135 @@ public class MenuTarea {
                     tareaEncontrada.setPrioridad(prioridadEnum);
                     break;
                 case 5:
-                    System.out.println("CATEGORIAS");
+                    System.out.println(Colores.TITULO + "CATEGORIAS" + Colores.RESET);
                     gestor.listarCategorias();
-                    System.out.print("Ingrese el ID de la categoria deseada: ");
+                    System.out.print(Colores.INGRESO + "Ingrese el ID de la categoria deseada: " + Colores.RESET);
                     int idCategoria = tcld.nextInt();
                     tcld.nextLine();
                     Categoria categoriaSeleccionada = gestor.buscarCategoria(idCategoria);
                     if (categoriaSeleccionada!=null) {
                         tareaEncontrada.setCategoria(categoriaSeleccionada);
                     } else {
-                        System.out.println("No se encontro la categoria");
+                        System.out.println(Colores.ERROR + "No se encontro la categoria" + Colores.RESET);
+                        System.out.println(" ");
                     }
                     break;
                 default:
-                    System.out.println("Opcion no valida");
+                    System.out.println(Colores.ERROR + "Opcion no valida" + Colores.RESET);
+                    System.out.println(" ");
+                    break;
             }
+        } else {
+            System.out.println(Colores.ERROR + "Tarea no encontrada" + Colores.RESET);
+            System.out.println(" ");
         }
     }
 
     public void eliminacionTarea() {
-        System.out.print("Ingrese el ID de la tarea a eliminar: ");
+        System.out.print(Colores.INGRESO + "Ingrese el ID de la tarea a eliminar: " + Colores.RESET);
         int idTarea = tcld.nextInt();
         tcld.nextLine();
         Tarea tareaEncontrada = gestor.buscarTarea(idTarea);
         if (tareaEncontrada!=null) {
             gestor.eliminarTarea(idTarea);
         } else {
-            System.out.println("modelo.Tarea no encontrada");
+            System.out.println(Colores.ERROR + "Tarea no encontrada" + Colores.RESET);
+            System.out.println(" ");
         }
     }
 
     public void asignacionTarea() {
-        System.out.print("Ingrese el ID del usuario: ");
+        System.out.print(Colores.INGRESO + "Ingrese el ID del usuario: " + Colores.RESET);
         int idUsuario = tcld.nextInt();
         tcld.nextLine();
         Usuario usuarioEncontrado = gestor.buscarUsuario(idUsuario);
         if (usuarioEncontrado!=null) {
-            System.out.print("Ingrese el ID de la tarea a asignar: ");
+            System.out.print(Colores.INGRESO + "Ingrese el ID de la tarea a asignar: " + Colores.RESET);
             int idTarea = tcld.nextInt();
             tcld.nextLine();
             Tarea tarea = gestor.buscarTarea(idTarea);
             if (tarea!=null) {
                 gestor.asignarTarea(idUsuario, tarea);
-                System.out.println("modelo.Tarea asignada");
+                System.out.println(Colores.EXITO + "Tarea asignada" + Colores.RESET);
+                System.out.println(" ");
             } else {
-                System.out.println("La tarea no existe");
+                System.out.println(Colores.ERROR + "La tarea no existe" + Colores.RESET);
+                System.out.println(" ");
             }
         } else {
-            System.out.println("El usuario no existe");
+            System.out.println(Colores.ERROR + "El usuario no existe" + Colores.RESET);
+            System.out.println(" ");
         }
     }
 
     public void eliminarAsignacion() {
-        System.out.print("Ingrese el id del usuario: ");
+        System.out.print(Colores.INGRESO + "Ingrese el id del usuario: " + Colores.RESET);
         int idUsuario = tcld.nextInt();
         Usuario usuarioEncontrado = gestor.buscarUsuario(idUsuario);
         if (usuarioEncontrado!=null) {
-            System.out.print("Ingrese el ID de la tarea a eliminar: ");
+            System.out.print(Colores.INGRESO + "Ingrese el ID de la tarea a eliminar: " + Colores.RESET);
             int idTarea = tcld.nextInt();
             Tarea tareaEncontrada = gestor.buscarTarea(idTarea);
 
             if (tareaEncontrada!=null) {
                 usuarioEncontrado.eliminarTarea(idTarea);
-                System.out.println("modelo.Tarea eliminada para el usuario");
+                System.out.println(Colores.EXITO + "Tarea eliminada para el usuario" + Colores.RESET);
+                System.out.println(" ");
             } else {
-                System.out.println("La tarea no existe");
+                System.out.println(Colores.ERROR + "La tarea no existe" + Colores.RESET);
+                System.out.println(" ");
             }
         } else {
-            System.out.println("El usuario no existe");
+            System.out.println(Colores.ERROR + "El usuario no existe" + Colores.RESET);
+            System.out.println(" ");
         }
     }
 
     public void empezarTarea() {
-        System.out.print("Ingrese el ID de la tarea: ");
+        System.out.print(Colores.INGRESO + "Ingrese el ID de la tarea: " + Colores.RESET);
         int idTarea = tcld.nextInt();
         tcld.nextLine();
 
         Tarea tarea = gestor.buscarTarea(idTarea);
         if (tarea!=null) {
             tarea.empezar();
-            System.out.println("modelo.Tarea empezada");
+            System.out.println(Colores.EXITO + "Tarea empezada" + Colores.RESET);
+            System.out.println(" ");
         } else {
-            System.out.println("La tarea no existe");
+            System.out.println(Colores.ERROR + "La tarea no existe" + Colores.RESET);
+            System.out.println(" ");
         }
     }
 
     public void completarTarea() {
-        System.out.print("Ingrese el ID de la tarea: ");
+        System.out.print(Colores.INGRESO + "Ingrese el ID de la tarea: " + Colores.RESET);
         int idTarea = tcld.nextInt();
         tcld.nextLine();
 
         Tarea tarea = gestor.buscarTarea(idTarea);
         if (tarea!=null) {
             tarea.completar();
-            System.out.println("modelo.Tarea completada");
+            System.out.println(Colores.EXITO + "Tarea completada" + Colores.RESET);
+            System.out.println(" ");
         } else {
-            System.out.println("La tarea no existe");
+            System.out.println(Colores.ERROR + "La tarea no existe" + Colores.RESET);
+            System.out.println(" ");
         }
     }
 
     public void cancelarTarea() {
-        System.out.print("Ingrese el ID de la tarea: ");
+        System.out.print(Colores.INGRESO + "Ingrese el ID de la tarea: " + Colores.RESET);
         int idTarea = tcld.nextInt();
         tcld.nextLine();
 
         Tarea tarea = gestor.buscarTarea(idTarea);
         if (tarea!=null) {
             tarea.cancelar();
-            System.out.println("modelo.Tarea cancelada");
+            System.out.println(Colores.EXITO + "Tarea cancelada" + Colores.RESET);
+            System.out.println(" ");
         } else {
-            System.out.println("La tarea no existe");
+            System.out.println(Colores.ERROR + "La tarea no existe" + Colores.RESET);
+            System.out.println(" ");
         }
     }
 }

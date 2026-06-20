@@ -2,7 +2,7 @@ package menus;
 
 import gestor.GestorTareas;
 import modelo.Usuario;
-
+import util.*;
 import java.util.Scanner;
 
 public class MenuUsuarios {
@@ -17,35 +17,37 @@ public class MenuUsuarios {
     public void menuUsuarios() {
         int opcion;
         do {
-            System.out.println("---MENU DE USUARIO---");
-            System.out.println("1. Crear usuario");
-            System.out.println("2. Salir");
+            System.out.println(Colores.TITULO + "---MENU DE USUARIO---" + Colores.RESET);
+            System.out.println(Colores.MENU + "1. Crear usuario" + Colores.RESET);
+            System.out.println(Colores.MENU + "2. Salir" + Colores.RESET);
 
-            System.out.print("\nIngrese una opcion: ");
+            System.out.print(Colores.INGRESO + "\nIngrese una opcion: " + Colores.RESET);
             opcion = tcld.nextInt();
             tcld.nextLine();
             switch (opcion) {
                 case 1:
                     crearUsuario();
-                    break;
+                    return;
                 case 2:
-                    System.out.println("SALIENDO...");
-                    break;
+                    System.out.println(Colores.INFO + "SALIENDO..." + Colores.RESET);
+                    return;
                 default:
-                    System.out.println("Opcion no valida");
+                    System.out.println("Opcion no valida" + Colores.RESET);
+                    break;
             }
         }while (opcion!=2);
 
     }
 
     public void crearUsuario(){
-        System.out.print("Ingrese el ID del usuario (RUT sin puntos ni guion): ");
+        System.out.print(Colores.INGRESO + "Ingrese el ID del usuario (RUT sin puntos ni guion): " + Colores.RESET);
         int idUsuario = tcld.nextInt();
         tcld.nextLine();
-        System.out.print("Ingrese el nombre del usuario: ");
+        System.out.print(Colores.INGRESO + "Ingrese el nombre del usuario: " + Colores.RESET);
         String nombreUsuario = tcld.nextLine();
         Usuario usuario = new Usuario(idUsuario, nombreUsuario);
         gestor.agregarUsuario(usuario);
-        System.out.println("modelo.Usuario creado correctamente");
+        System.out.println(Colores.EXITO + "Usuario creado correctamente" + Colores.RESET);
+        System.out.println(" ");
     }
 }
