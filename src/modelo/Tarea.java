@@ -1,4 +1,7 @@
+package modelo;
+
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class Tarea {
     private int id;
@@ -9,6 +12,7 @@ public class Tarea {
     private EstadoTarea estado;
     private Prioridad prioridad;
     private Categoria categoria;
+    private ArrayList<Tarea> tareas;
 
     public Tarea(int id, String titulo, String descripcion, LocalDate fechaCreacion, LocalDate fechaLimite, EstadoTarea estado, Prioridad prioridad, Categoria categoria) {
         this.id = id;
@@ -33,6 +37,10 @@ public class Tarea {
         return prioridad;
     }
 
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
     public void completar() {
         estado = EstadoTarea.COMPLETADA;
     }
@@ -44,6 +52,28 @@ public class Tarea {
     public void empezar() {
         estado = EstadoTarea.EN_PROGRESO;
     }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public void setFechaLimite(LocalDate fechaLimite) {
+        this.fechaLimite = fechaLimite;
+    }
+
+    public void setPrioridad(Prioridad prioridad) {
+        this.prioridad = prioridad;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
+
+
 
     @Override
     public String toString() {

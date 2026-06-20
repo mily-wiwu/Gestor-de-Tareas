@@ -1,9 +1,12 @@
+package gestor;
+import modelo.*;
 import java.util.ArrayList;
 
 public class GestorTareas {
     private ArrayList<Usuario> usuarios;
     private ArrayList<Categoria> categorias;
     private ArrayList<Tarea> tareas;
+    private EstadoTarea estado;
 
     public GestorTareas() {
         usuarios = new ArrayList<>();
@@ -13,7 +16,7 @@ public class GestorTareas {
 
     public void agregarTarea(Tarea tarea) {
         tareas.add(tarea);
-        System.out.println("Tarea agregada correctamente.");
+        System.out.println("modelo.Tarea agregada correctamente.");
     }
 
     public void agregarUsuario(Usuario usuario) {
@@ -113,5 +116,28 @@ public class GestorTareas {
         }
 
         return completadas;
+    }
+
+    public void eliminarTarea(int idTarea) {
+        for (int i=0;i<tareas.size();i++) {
+            if (tareas.get(i).getId() == idTarea) {
+                tareas.remove(i);
+                break;
+            }
+        }
+    }
+
+    public ArrayList<Tarea> mostrarCategoria(int idCategoria) {
+        ArrayList<Tarea> resultado = new ArrayList<>();
+
+        for (Tarea tarea : tareas) {
+            if (tarea.getCategoria() != null &&
+                    tarea.getCategoria().getId() == idCategoria) {
+
+                resultado.add(tarea);
+            }
+        }
+
+        return resultado;
     }
 }
