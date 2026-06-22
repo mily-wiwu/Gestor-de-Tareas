@@ -1,6 +1,7 @@
 package modelo;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
 public class Tarea {
@@ -27,6 +28,10 @@ public class Tarea {
 
     public int getId() {
         return id;
+    }
+
+    public LocalDate getFechaLimite() {
+        return fechaLimite;
     }
 
     public EstadoTarea getEstado() {
@@ -73,7 +78,27 @@ public class Tarea {
         this.categoria = categoria;
     }
 
+    public SituacionTemporal getSituacionTemporal() {
+        SituacionTemporal situacion;
+        if (fechaLimite.isBefore(LocalDate.now())) {
+            situacion = SituacionTemporal.VENCIDA;
+        } else if (fechaLimite.equals(LocalDate.now())) {
+            situacion = SituacionTemporal.VENCE_HOY;
+        } else if (!fechaLimite.isBefore(LocalDate.now()) && !fechaLimite.isAfter(LocalDate.now().plusDays(3))) {
+            situacion = SituacionTemporal.PROXIMA_A_VENCER;
+        } else {
+            situacion = SituacionTemporal.EN_PLAZO;
+        }
+        return situacion;
+    }
 
+    public long diasRestantes() {
+        return ChronoUnit.DAYS.between(LocalDate.now(), fechaLimite);
+    }
+
+    public boolean esFutura() {
+        return fechaLimite.isAfter(LocalDate.now());
+    }
 
     @Override
     public String toString() {

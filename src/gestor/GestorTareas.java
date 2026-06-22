@@ -2,7 +2,7 @@ package gestor;
 import modelo.*;
 import util.Colores;
 
-import java.util.ArrayList;
+import java.util.*;
 
 public class GestorTareas {
     private ArrayList<Usuario> usuarios;
@@ -24,36 +24,36 @@ public class GestorTareas {
         usuarios.add(usuario);
     }
 
-    public Usuario buscarUsuario(int id){
+    public Optional<Usuario> buscarUsuario(int id){
         for (Usuario usuario : usuarios) {
             if (usuario.getId() == id) {
-                return usuario;
+                return Optional.of(usuario);
             }
         }
-        return  null;
+        return Optional.empty();
     }
 
     public void agregarCategoria(Categoria categoria){
         categorias.add(categoria);
     }
 
-    public Tarea buscarTarea(int id){
+    public Optional<Tarea> buscarTarea(int id){
         for (Tarea tarea : tareas) {
             if (tarea.getId() == id) {
-                return tarea;
+                return Optional.of(tarea);
             }
         }
-        return null;
+        return Optional.empty();
     }
 
 
-    public Categoria buscarCategoria(int id){
+    public Optional<Categoria> buscarCategoria(int id){
         for (Categoria categoria : categorias) {
             if (categoria.getId() == id) {
-                return categoria;
+                return Optional.of(categoria);
             }
         }
-        return null;
+        return Optional.empty();
     }
 
     public void asignarTarea(int idUsuario, Tarea tarea){
@@ -65,7 +65,7 @@ public class GestorTareas {
     }
 
     public ArrayList<Tarea> buscarPorPrioridad(Prioridad prioridad){
-        ArrayList<Tarea> tareasPrioridad = new ArrayList<Tarea>();
+        ArrayList<Tarea> tareasPrioridad = new ArrayList<>();
         for (Tarea tarea : tareas) {
             if (tarea.getPrioridad() == prioridad) {
                 tareasPrioridad.add(tarea);
@@ -76,7 +76,7 @@ public class GestorTareas {
     }
 
     public ArrayList<Tarea> buscarPorEstado(EstadoTarea estado){
-        ArrayList<Tarea> tareasEstado = new ArrayList<Tarea>();
+        ArrayList<Tarea> tareasEstado = new ArrayList<>();
         for (Tarea tarea : tareas) {
             if (tarea.getEstado() == estado) {
                 tareasEstado.add(tarea);
@@ -100,7 +100,7 @@ public class GestorTareas {
     }
 
     public ArrayList<Tarea> obtenerTareasPendientes(){
-        ArrayList<Tarea> pendientes = new ArrayList<Tarea>();
+        ArrayList<Tarea> pendientes = new ArrayList<>();
         for (Tarea tarea : tareas) {
             if (tarea.getEstado() == EstadoTarea.PENDIENTE) {
                 pendientes.add(tarea);
@@ -111,7 +111,7 @@ public class GestorTareas {
     }
 
     public ArrayList<Tarea> obtenerTareasCompletadas(){
-        ArrayList<Tarea> completadas = new ArrayList<Tarea>();
+        ArrayList<Tarea> completadas = new ArrayList<>();
         for (Tarea tarea : tareas) {
             if (tarea.getEstado() == EstadoTarea.COMPLETADA) {
                 completadas.add(tarea);
@@ -142,5 +142,58 @@ public class GestorTareas {
         }
 
         return resultado;
+    }
+
+    public ArrayList<Tarea> obtenerTareasVencidas() {
+        ArrayList<Tarea> vencidas = new ArrayList<>();
+        for (Tarea tarea : tareas) {
+            if (tarea.getSituacionTemporal()==SituacionTemporal.VENCIDA) {
+                vencidas.add(tarea);
+            }
+        }
+        return vencidas;
+    }
+
+    public ArrayList<Tarea> obtenerTareasProximas() {
+        ArrayList<Tarea> proximas = new ArrayList<>();
+        for (Tarea tarea : tareas) {
+            if (tarea.getSituacionTemporal()==SituacionTemporal.PROXIMA_A_VENCER) {
+                proximas.add(tarea);
+            }
+        }
+        return proximas;
+    }
+
+    public ArrayList<Tarea> obtenerVenceHoy() {
+        ArrayList<Tarea> venceHoy = new ArrayList<>();
+        for (Tarea tarea : tareas) {
+            if (tarea.getSituacionTemporal()==SituacionTemporal.VENCE_HOY) {
+                venceHoy.add(tarea);
+            }
+        }
+
+        return venceHoy;
+    }
+
+    public ArrayList<Tarea> obtenerEnPlazo() {
+        ArrayList<Tarea> enPlazo = new ArrayList<>();
+        for (Tarea tarea : tareas) {
+            if (tarea.getSituacionTemporal()==SituacionTemporal.EN_PLAZO){
+                enPlazo.add(tarea);
+            }
+        }
+        return enPlazo;
+    }
+
+    public ArrayList<Tarea> obtenerTareasFuturas() {
+        ArrayList<Tarea> tareaFutura = new ArrayList<>();
+        for (Tarea tarea : tareas) {
+            if (tarea.esFutura()) {
+                tareaFutura.add(tarea);
+            }
+        }
+
+        tareaFutura.sort(Comparator.comparing(Tarea::getFechaLimite));
+        return tareaFutura;
     }
 }

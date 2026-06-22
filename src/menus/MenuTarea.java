@@ -4,6 +4,7 @@ import gestor.GestorTareas;
 import modelo.*;
 import util.*;
 import java.time.LocalDate;
+import java.util.Optional;
 import java.util.Scanner;
 
 public class MenuTarea {
@@ -105,13 +106,13 @@ public class MenuTarea {
         System.out.println(Colores.TITULO + "CATEGORIAS" + Colores.RESET);
         gestor.listarCategorias();
         Categoria categoriaSeleccionada = null;
-        while (categoriaSeleccionada==null) {
+        while (categoriaSeleccionada == null) {
             System.out.print(Colores.INGRESO + "Ingrese el ID una categoria: " + Colores.RESET);
             int idCategoria = tcld.nextInt();
             tcld.nextLine();
-            Categoria categoriaEncontrada = gestor.buscarCategoria(idCategoria);
-            if (categoriaEncontrada!= null) {
-                categoriaSeleccionada = categoriaEncontrada;
+            Optional<Categoria> categoriaEncontrada = gestor.buscarCategoria(idCategoria);
+            if (categoriaEncontrada.isPresent()) {
+                categoriaSeleccionada = categoriaEncontrada.get();
             } else {
                 System.out.println(Colores.ERROR + "La categoria no existe" + Colores.RESET);
                 System.out.println(" ");
@@ -137,18 +138,19 @@ public class MenuTarea {
         System.out.print(Colores.INGRESO + "Ingrese el ID de la tarea a modificar: " + Colores.RESET);
         int idTarea = tcld.nextInt();
         tcld.nextLine();
-        Tarea tareaEncontrada = gestor.buscarTarea(idTarea);
-        if (tareaEncontrada!=null) {
+        Optional<Tarea> tareaEncontrada = gestor.buscarTarea(idTarea);
+        if (tareaEncontrada.isPresent()) {
+            Tarea tarea = tareaEncontrada.get();
             switch (opModificar) {
                 case 1:
                     System.out.print(Colores.INGRESO + "Ingrese el nuevo titulo: " + Colores.RESET);
                     String titulo = tcld.nextLine();
-                    tareaEncontrada.setTitulo(titulo);
+                    tarea.setTitulo(titulo);
                     break;
                 case 2:
                     System.out.print(Colores.INGRESO + "Ingrese la nueva descripcion: " + Colores.RESET);
                     String descripcion = tcld.nextLine();
-                    tareaEncontrada.setDescripcion(descripcion);
+                    tarea.setDescripcion(descripcion);
                     break;
                 case 3:
                     System.out.print(Colores.INGRESO + "Ingrese el nuevo dia limite: " + Colores.RESET);
@@ -159,7 +161,7 @@ public class MenuTarea {
                     int anioLimite = tcld.nextInt();
                     tcld.nextLine();
                     LocalDate fechaLimite = LocalDate.of(anioLimite,mesLimite, diaLimite);
-                    tareaEncontrada.setFechaLimite(fechaLimite);
+                    tarea.setFechaLimite(fechaLimite);
                     break;
                 case 4:
                     System.out.print(Colores.INGRESO + "Ingrese la nueva prioridad (Alta, media baja): " + Colores.RESET);
@@ -179,7 +181,7 @@ public class MenuTarea {
                         prioridadEnum = Prioridad.BAJA;
                     }
 
-                    tareaEncontrada.setPrioridad(prioridadEnum);
+                    tarea.setPrioridad(prioridadEnum);
                     break;
                 case 5:
                     System.out.println(Colores.TITULO + "CATEGORIAS" + Colores.RESET);
@@ -187,9 +189,9 @@ public class MenuTarea {
                     System.out.print(Colores.INGRESO + "Ingrese el ID de la categoria deseada: " + Colores.RESET);
                     int idCategoria = tcld.nextInt();
                     tcld.nextLine();
-                    Categoria categoriaSeleccionada = gestor.buscarCategoria(idCategoria);
-                    if (categoriaSeleccionada!=null) {
-                        tareaEncontrada.setCategoria(categoriaSeleccionada);
+                    Optional<Categoria> categoriaEncontrada = gestor.buscarCategoria(idCategoria);
+                    if (categoriaEncontrada.isPresent()) {
+                        tarea.setCategoria(categoriaEncontrada.get());
                     } else {
                         System.out.println(Colores.ERROR + "No se encontro la categoria" + Colores.RESET);
                         System.out.println(" ");
@@ -210,8 +212,8 @@ public class MenuTarea {
         System.out.print(Colores.INGRESO + "Ingrese el ID de la tarea a eliminar: " + Colores.RESET);
         int idTarea = tcld.nextInt();
         tcld.nextLine();
-        Tarea tareaEncontrada = gestor.buscarTarea(idTarea);
-        if (tareaEncontrada!=null) {
+        Optional<Tarea> tareaEncontrada = gestor.buscarTarea(idTarea);
+        if (tareaEncontrada.isPresent()) {
             gestor.eliminarTarea(idTarea);
         } else {
             System.out.println(Colores.ERROR + "Tarea no encontrada" + Colores.RESET);
@@ -223,14 +225,14 @@ public class MenuTarea {
         System.out.print(Colores.INGRESO + "Ingrese el ID del usuario: " + Colores.RESET);
         int idUsuario = tcld.nextInt();
         tcld.nextLine();
-        Usuario usuarioEncontrado = gestor.buscarUsuario(idUsuario);
-        if (usuarioEncontrado!=null) {
+        Optional<Usuario> usuarioEncontrado = gestor.buscarUsuario(idUsuario);
+        if (usuarioEncontrado.isPresent()) {
             System.out.print(Colores.INGRESO + "Ingrese el ID de la tarea a asignar: " + Colores.RESET);
             int idTarea = tcld.nextInt();
             tcld.nextLine();
-            Tarea tarea = gestor.buscarTarea(idTarea);
-            if (tarea!=null) {
-                gestor.asignarTarea(idUsuario, tarea);
+            Optional<Tarea> tarea = gestor.buscarTarea(idTarea);
+            if (tarea.isPresent()) {
+                gestor.asignarTarea(idUsuario, tarea.get());
                 System.out.println(Colores.EXITO + "Tarea asignada" + Colores.RESET);
                 System.out.println(" ");
             } else {
@@ -246,14 +248,14 @@ public class MenuTarea {
     public void eliminarAsignacion() {
         System.out.print(Colores.INGRESO + "Ingrese el id del usuario: " + Colores.RESET);
         int idUsuario = tcld.nextInt();
-        Usuario usuarioEncontrado = gestor.buscarUsuario(idUsuario);
-        if (usuarioEncontrado!=null) {
+        Optional<Usuario> usuarioEncontrado = gestor.buscarUsuario(idUsuario);
+        if (usuarioEncontrado.isPresent()) {
             System.out.print(Colores.INGRESO + "Ingrese el ID de la tarea a eliminar: " + Colores.RESET);
             int idTarea = tcld.nextInt();
-            Tarea tareaEncontrada = gestor.buscarTarea(idTarea);
+            Optional<Tarea> tareaEncontrada = gestor.buscarTarea(idTarea);
 
-            if (tareaEncontrada!=null) {
-                usuarioEncontrado.eliminarTarea(idTarea);
+            if (tareaEncontrada.isPresent()) {
+                usuarioEncontrado.get().eliminarTarea(idTarea);
                 System.out.println(Colores.EXITO + "Tarea eliminada para el usuario" + Colores.RESET);
                 System.out.println(" ");
             } else {
@@ -271,9 +273,9 @@ public class MenuTarea {
         int idTarea = tcld.nextInt();
         tcld.nextLine();
 
-        Tarea tarea = gestor.buscarTarea(idTarea);
-        if (tarea!=null) {
-            tarea.empezar();
+        Optional<Tarea> tarea = gestor.buscarTarea(idTarea);
+        if (tarea.isPresent()) {
+            tarea.get().empezar();
             System.out.println(Colores.EXITO + "Tarea empezada" + Colores.RESET);
             System.out.println(" ");
         } else {
@@ -287,9 +289,9 @@ public class MenuTarea {
         int idTarea = tcld.nextInt();
         tcld.nextLine();
 
-        Tarea tarea = gestor.buscarTarea(idTarea);
-        if (tarea!=null) {
-            tarea.completar();
+        Optional<Tarea> tarea = gestor.buscarTarea(idTarea);
+        if (tarea.isPresent()) {
+            tarea.get().completar();
             System.out.println(Colores.EXITO + "Tarea completada" + Colores.RESET);
             System.out.println(" ");
         } else {
@@ -303,9 +305,9 @@ public class MenuTarea {
         int idTarea = tcld.nextInt();
         tcld.nextLine();
 
-        Tarea tarea = gestor.buscarTarea(idTarea);
-        if (tarea!=null) {
-            tarea.cancelar();
+        Optional<Tarea> tarea = gestor.buscarTarea(idTarea);
+        if (tarea.isPresent()) {
+            tarea.get().cancelar();
             System.out.println(Colores.EXITO + "Tarea cancelada" + Colores.RESET);
             System.out.println(" ");
         } else {
