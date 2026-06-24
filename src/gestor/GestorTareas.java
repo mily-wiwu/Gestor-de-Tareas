@@ -5,14 +5,22 @@ import util.*;
 import java.util.*;
 
 public class GestorTareas {
+    private static GestorTareas instancia;
     private Set<Usuario> usuarios;
     private Set<Categoria> categorias;
     private Set<Tarea> tareas;
 
-    public GestorTareas() {
+    private GestorTareas() {
         usuarios = new HashSet<>();
         categorias = new HashSet<>();
         tareas = new HashSet<>();
+    }
+
+    public static GestorTareas getInstancia(){
+        if (instancia==null) {
+            instancia = new GestorTareas();
+        }
+        return instancia;
     }
 
     public boolean agregarTarea(Tarea tarea) {

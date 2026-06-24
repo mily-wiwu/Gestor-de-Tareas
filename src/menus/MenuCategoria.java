@@ -6,11 +6,9 @@ import util.*;
 import java.util.Scanner;
 
 public class MenuCategoria {
-    private GestorTareas gestor;
     private Scanner tcld;
 
-    public MenuCategoria(GestorTareas gestor, Scanner tcld){
-        this.gestor = gestor;
+    public MenuCategoria(Scanner tcld){
         this.tcld = tcld;
     }
 
@@ -53,7 +51,7 @@ public class MenuCategoria {
         String descripcion = tcld.nextLine();
 
         Categoria categoria = new Categoria(idCategoria, nombre, descripcion);
-        boolean creado = gestor.agregarCategoria(categoria);
+        boolean creado = GestorTareas.getInstancia().agregarCategoria(categoria);
         if (creado) {
             System.out.println(Colores.EXITO + "Categoria creada correctamente" + Colores.RESET);
             System.out.println(" ");

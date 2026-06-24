@@ -9,11 +9,10 @@ import java.util.Scanner;
 public class Main {
     public static void main (String[] args) {
         Scanner tcld = new Scanner(System.in);
-        GestorTareas gestor = new GestorTareas();
-        MenuUsuarios menuUsuarios = new MenuUsuarios(gestor,tcld);
-        MenuCategoria menuCategoria = new MenuCategoria(gestor, tcld);
-        MenuTarea menuTarea = new MenuTarea(gestor, tcld);
-        MenuConsultas menuConsultas = new MenuConsultas(gestor, tcld);
+        MenuUsuarios menuUsuarios = new MenuUsuarios(tcld);
+        MenuCategoria menuCategoria = new MenuCategoria(tcld);
+        MenuTarea menuTarea = new MenuTarea(tcld);
+        MenuConsultas menuConsultas = new MenuConsultas(tcld);
         int opcion;
 
         do {

@@ -7,11 +7,9 @@ import util.*;
 import java.util.*;
 
 public class MenuConsultas {
-    private GestorTareas gestor;
     private Scanner tcld;
 
-    public MenuConsultas(GestorTareas gestor, Scanner tcld){
-        this.gestor = gestor;
+    public MenuConsultas(Scanner tcld){
         this.tcld = tcld;
     }
 
@@ -90,7 +88,7 @@ public class MenuConsultas {
     }
 
     public void mostrarTareas() {
-        gestor.listarTareas();
+        GestorTareas.getInstancia().listarTareas();
         System.out.println(" ");
     }
 
@@ -98,7 +96,7 @@ public class MenuConsultas {
         System.out.println(Colores.INGRESO  + "Ingrese el ID de la tarea: " + Colores.RESET);
         int idTarea = tcld.nextInt();
         tcld.nextLine();
-        Optional<Tarea> tareaEncontrada = gestor.buscarTarea(idTarea);
+        Optional<Tarea> tareaEncontrada = GestorTareas.getInstancia().buscarTarea(idTarea);
 
         if (tareaEncontrada.isPresent()) {
             System.out.println(tareaEncontrada);
@@ -127,7 +125,7 @@ public class MenuConsultas {
             prioridadEnum = Prioridad.BAJA;
         }
 
-        List<Tarea> prioridades = gestor.buscarPorPrioridad(prioridadEnum);
+        List<Tarea> prioridades = GestorTareas.getInstancia().buscarPorPrioridad(prioridadEnum);
         if (prioridades.isEmpty()) {
             System.out.println(Colores.ERROR + "No se encontraron tareas" + Colores.RESET);
             System.out.println(" ");
@@ -159,7 +157,7 @@ public class MenuConsultas {
             estado = EstadoTarea.CANCELADA;
         }
 
-        List<Tarea> estados = gestor.buscarPorEstado(estado);
+        List<Tarea> estados = GestorTareas.getInstancia().buscarPorEstado(estado);
         if (estados.isEmpty()) {
             System.out.println(Colores.ERROR + "No se encontraron tareas" + Colores.RESET);
             System.out.println(" ");
@@ -175,7 +173,7 @@ public class MenuConsultas {
         System.out.print(Colores.INGRESO + "Ingrese el id del usuario: " + Colores.RESET);
         int idUsuario = tcld.nextInt();
         tcld.nextLine();
-        Optional<Usuario> usuarioEncontrado = gestor.buscarUsuario(idUsuario);
+        Optional<Usuario> usuarioEncontrado = GestorTareas.getInstancia().buscarUsuario(idUsuario);
         if (usuarioEncontrado.isPresent()) {
             Collection<Tarea> tareasUsuario = usuarioEncontrado.get().tareasUsuario();
 
@@ -197,13 +195,13 @@ public class MenuConsultas {
 
     public void tareasCategoria() {
         System.out.println(Colores.TITULO + "CATEGORIAS" + Colores.RESET);
-        gestor.listarCategorias();
+        GestorTareas.getInstancia().listarCategorias();
         System.out.print(Colores.INGRESO + "Ingrese el ID de la categoria a mostrar: " + Colores.RESET);
         int idCategoria = tcld.nextInt();
         tcld.nextLine();
-        Optional<Categoria> categoriaSeleccionada = gestor.buscarCategoria(idCategoria);
+        Optional<Categoria> categoriaSeleccionada = GestorTareas.getInstancia().buscarCategoria(idCategoria);
         if (categoriaSeleccionada.isPresent()) {
-            List<Tarea> tareasCategoria = gestor.mostrarCategoria(idCategoria);
+            List<Tarea> tareasCategoria = GestorTareas.getInstancia().mostrarCategoria(idCategoria);
             if (tareasCategoria.isEmpty()) {
                 System.out.println(Colores.ERROR + "No se encontraron tareas" + Colores.RESET);
                 System.out.println(" ");
@@ -217,7 +215,7 @@ public class MenuConsultas {
     }
 
     public void tareasPendientes(){
-        List<Tarea> pendientes = gestor.obtenerTareasPendientes();
+        List<Tarea> pendientes = GestorTareas.getInstancia().obtenerTareasPendientes();
         if (pendientes.isEmpty()) {
             System.out.println(Colores.ERROR + "No se encontraron tareas" + Colores.RESET);
             System.out.println(" ");
@@ -230,7 +228,7 @@ public class MenuConsultas {
     }
 
     public void tareasCompletas(){
-        List<Tarea> completadas = gestor.obtenerTareasCompletadas();
+        List<Tarea> completadas = GestorTareas.getInstancia().obtenerTareasCompletadas();
         if (completadas.isEmpty()) {
             System.out.println(Colores.ERROR + "No se encontraron tareas" + Colores.RESET);
             System.out.println(" ");
@@ -243,7 +241,7 @@ public class MenuConsultas {
     }
 
     public void tareasVencidas() {
-        List<Tarea> vencidas = gestor.obtenerTareasVencidas();
+        List<Tarea> vencidas = GestorTareas.getInstancia().obtenerTareasVencidas();
         if (vencidas.isEmpty()) {
             System.out.println(Colores.ERROR + "No se encontraron tareas" + Colores.RESET);
             System.out.println(" ");
@@ -256,7 +254,7 @@ public class MenuConsultas {
     }
 
     public void tareasHoy() {
-        List<Tarea> venceHoy = gestor.obtenerVenceHoy();
+        List<Tarea> venceHoy = GestorTareas.getInstancia().obtenerVenceHoy();
         if (venceHoy.isEmpty()) {
             System.out.println(Colores.ERROR + "No se encontraron tareas" + Colores.RESET);
             System.out.println(" ");
@@ -269,7 +267,7 @@ public class MenuConsultas {
     }
 
     public void tareasProximas() {
-        List<Tarea> proximas = gestor.obtenerTareasProximas();
+        List<Tarea> proximas = GestorTareas.getInstancia().obtenerTareasProximas();
         if (proximas.isEmpty()) {
             System.out.println(Colores.ERROR + "No se encontraron tareas" + Colores.RESET);
             System.out.println(" ");
@@ -282,7 +280,7 @@ public class MenuConsultas {
     }
 
     public void tareasEnPlazo() {
-        List<Tarea> enPlazo = gestor.obtenerEnPlazo();
+        List<Tarea> enPlazo = GestorTareas.getInstancia().obtenerEnPlazo();
         if (enPlazo.isEmpty()) {
             System.out.println(Colores.ERROR + "No se encontraron tareas" + Colores.RESET);
             System.out.println(" ");
@@ -295,7 +293,7 @@ public class MenuConsultas {
     }
 
     public void tareasFuturas() {
-        List<Tarea> futuras = gestor.obtenerTareasFuturas();
+        List<Tarea> futuras = GestorTareas.getInstancia().obtenerTareasFuturas();
         if (futuras.isEmpty()) {
             System.out.println(Colores.ERROR + "No se encontraron tareas" + Colores.RESET);
             System.out.println(" ");

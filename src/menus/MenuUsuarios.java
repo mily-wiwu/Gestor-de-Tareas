@@ -1,16 +1,14 @@
 package menus;
 
-import gestor.GestorTareas;
+import gestor.*;
 import modelo.Usuario;
 import util.*;
 import java.util.Scanner;
 
 public class MenuUsuarios {
-    private GestorTareas gestor;
     private Scanner tcld;
 
-    public MenuUsuarios (GestorTareas gestor, Scanner tcld) {
-        this.gestor = gestor;
+    public MenuUsuarios (Scanner tcld) {
         this.tcld = tcld;
     }
 
@@ -46,7 +44,7 @@ public class MenuUsuarios {
         System.out.print(Colores.INGRESO + "Ingrese el nombre del usuario: " + Colores.RESET);
         String nombreUsuario = tcld.nextLine();
         Usuario usuario = new Usuario(idUsuario, nombreUsuario);
-        boolean creado = gestor.agregarUsuario(usuario);
+        boolean creado = GestorTareas.getInstancia().agregarUsuario(usuario);
         if (creado) {
             System.out.println(Colores.EXITO + "Usuario creado correctamente" + Colores.RESET);
             System.out.println(" ");
