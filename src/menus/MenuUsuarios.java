@@ -17,7 +17,7 @@ public class MenuUsuarios {
     public void menuUsuarios() {
         int opcion;
         do {
-            System.out.println(Colores.TITULO + "---MENU DE USUARIO---" + Colores.RESET);
+            System.out.println(Colores.TITULO + "\n---MENU DE USUARIO---" + Colores.RESET);
             System.out.println(Colores.MENU + "1. Crear usuario" + Colores.RESET);
             System.out.println(Colores.MENU + "2. Salir" + Colores.RESET);
 
@@ -46,8 +46,13 @@ public class MenuUsuarios {
         System.out.print(Colores.INGRESO + "Ingrese el nombre del usuario: " + Colores.RESET);
         String nombreUsuario = tcld.nextLine();
         Usuario usuario = new Usuario(idUsuario, nombreUsuario);
-        gestor.agregarUsuario(usuario);
-        System.out.println(Colores.EXITO + "Usuario creado correctamente" + Colores.RESET);
-        System.out.println(" ");
+        boolean creado = gestor.agregarUsuario(usuario);
+        if (creado) {
+            System.out.println(Colores.EXITO + "Usuario creado correctamente" + Colores.RESET);
+            System.out.println(" ");
+        } else {
+            System.out.println(Colores.ERROR + "El usuario ya existe (ID)" + Colores.RESET);
+            System.out.println(" ");
+        }
     }
 }

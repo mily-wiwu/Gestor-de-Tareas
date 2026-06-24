@@ -3,9 +3,8 @@ package menus;
 import gestor.GestorTareas;
 import modelo.*;
 import util.*;
-import java.util.Scanner;
-import java.util.ArrayList;
-import java.util.Optional;
+
+import java.util.*;
 
 public class MenuConsultas {
     private GestorTareas gestor;
@@ -19,7 +18,7 @@ public class MenuConsultas {
     public void menuConsultas(){
         int opcion;
         do {
-            System.out.println(Colores.TITULO + "---MENU DE CONSULTAS---" + Colores.RESET);
+            System.out.println(Colores.TITULO + "\n---MENU DE CONSULTAS---" + Colores.RESET);
             System.out.println(Colores.MENU + "1. Ver todas las tareas" + Colores.RESET);
             System.out.println(Colores.MENU + "2. Buscar tarea" + Colores.RESET);
             System.out.println(Colores.MENU + "3. Buscar por prioridad" + Colores.RESET);
@@ -103,8 +102,10 @@ public class MenuConsultas {
 
         if (tareaEncontrada.isPresent()) {
             System.out.println(tareaEncontrada);
+            System.out.println(" ");
         } else {
             System.out.println(Colores.ERROR + "Tarea no encontrada" + Colores.RESET);
+            System.out.println(" ");
         }
     }
 
@@ -126,13 +127,15 @@ public class MenuConsultas {
             prioridadEnum = Prioridad.BAJA;
         }
 
-        ArrayList<Tarea> prioridades = gestor.buscarPorPrioridad(prioridadEnum);
+        List<Tarea> prioridades = gestor.buscarPorPrioridad(prioridadEnum);
         if (prioridades.isEmpty()) {
             System.out.println(Colores.ERROR + "No se encontraron tareas" + Colores.RESET);
+            System.out.println(" ");
         } else {
             for (int i=0;i<prioridades.size();i++) {
                 System.out.println(prioridades.get(i));
             }
+            System.out.println(" ");
         }
     }
 
@@ -156,13 +159,15 @@ public class MenuConsultas {
             estado = EstadoTarea.CANCELADA;
         }
 
-        ArrayList<Tarea> estados = gestor.buscarPorEstado(estado);
+        List<Tarea> estados = gestor.buscarPorEstado(estado);
         if (estados.isEmpty()) {
             System.out.println(Colores.ERROR + "No se encontraron tareas" + Colores.RESET);
+            System.out.println(" ");
         } else {
             for (int i=0;i<estados.size();i++) {
                 System.out.println(estados.get(i));
             }
+            System.out.println(" ");
         }
     }
 
@@ -172,17 +177,21 @@ public class MenuConsultas {
         tcld.nextLine();
         Optional<Usuario> usuarioEncontrado = gestor.buscarUsuario(idUsuario);
         if (usuarioEncontrado.isPresent()) {
-            ArrayList<Tarea> tareasUsuario = usuarioEncontrado.get().tareasUsuario();
+            Collection<Tarea> tareasUsuario = usuarioEncontrado.get().tareasUsuario();
 
             if (tareasUsuario.isEmpty()) {
                 System.out.println(Colores.ERROR + "No se encontraron tareas" + Colores.RESET);
+                System.out.println(" ");
             } else {
                 for (Tarea t : tareasUsuario ){
                     System.out.println(t);
                 }
+                System.out.println(" ");
             }
         } else {
             System.out.println(Colores.ERROR + "El usuario no existe" + Colores.RESET);
+            System.out.println(" ");
+
         }
     }
 
@@ -194,92 +203,108 @@ public class MenuConsultas {
         tcld.nextLine();
         Optional<Categoria> categoriaSeleccionada = gestor.buscarCategoria(idCategoria);
         if (categoriaSeleccionada.isPresent()) {
-            ArrayList<Tarea> tareasCategoria = gestor.mostrarCategoria(idCategoria);
+            List<Tarea> tareasCategoria = gestor.mostrarCategoria(idCategoria);
             if (tareasCategoria.isEmpty()) {
                 System.out.println(Colores.ERROR + "No se encontraron tareas" + Colores.RESET);
+                System.out.println(" ");
             } else {
                 for (Tarea t : tareasCategoria) {
                     System.out.println(t);
                 }
+                System.out.println(" ");
             }
         }
     }
 
     public void tareasPendientes(){
-        ArrayList<Tarea> pendientes = gestor.obtenerTareasPendientes();
+        List<Tarea> pendientes = gestor.obtenerTareasPendientes();
         if (pendientes.isEmpty()) {
             System.out.println(Colores.ERROR + "No se encontraron tareas" + Colores.RESET);
+            System.out.println(" ");
         } else {
             for (int i=0;i<pendientes.size();i++) {
                 System.out.println(pendientes.get(i));
             }
+            System.out.println(" ");
         }
     }
 
     public void tareasCompletas(){
-        ArrayList<Tarea> completadas = gestor.obtenerTareasCompletadas();
+        List<Tarea> completadas = gestor.obtenerTareasCompletadas();
         if (completadas.isEmpty()) {
             System.out.println(Colores.ERROR + "No se encontraron tareas" + Colores.RESET);
+            System.out.println(" ");
         } else {
             for (int i=0;i<completadas.size();i++) {
                 System.out.println(completadas.get(i));
             }
+            System.out.println(" ");
         }
     }
 
     public void tareasVencidas() {
-        ArrayList<Tarea> vencidas = gestor.obtenerTareasVencidas();
+        List<Tarea> vencidas = gestor.obtenerTareasVencidas();
         if (vencidas.isEmpty()) {
             System.out.println(Colores.ERROR + "No se encontraron tareas" + Colores.RESET);
+            System.out.println(" ");
         } else {
             for (int i = 0; i < vencidas.size(); i++) {
                 System.out.println(Colores.ERROR + vencidas.get(i) + Colores.RESET);
-
             }
+            System.out.println(" ");
         }
     }
 
     public void tareasHoy() {
-        ArrayList<Tarea> venceHoy = gestor.obtenerVenceHoy();
+        List<Tarea> venceHoy = gestor.obtenerVenceHoy();
         if (venceHoy.isEmpty()) {
             System.out.println(Colores.ERROR + "No se encontraron tareas" + Colores.RESET);
+            System.out.println(" ");
         } else {
             for (int i=0;i<venceHoy.size();i++) {
                 System.out.println(Colores.ADVERTENCIA + venceHoy.get(i) + Colores.RESET);
             }
+            System.out.println(" ");
         }
     }
 
     public void tareasProximas() {
-        ArrayList<Tarea> proximas = gestor.obtenerTareasProximas();
+        List<Tarea> proximas = gestor.obtenerTareasProximas();
         if (proximas.isEmpty()) {
             System.out.println(Colores.ERROR + "No se encontraron tareas" + Colores.RESET);
+            System.out.println(" ");
         } else {
             for (int i=0;i<proximas.size();i++) {
                 System.out.println(Colores.ADVERTENCIA + proximas.get(i) + Colores.RESET);
             }
+            System.out.println(" ");
         }
     }
 
     public void tareasEnPlazo() {
-        ArrayList<Tarea> enPlazo = gestor.obtenerEnPlazo();
+        List<Tarea> enPlazo = gestor.obtenerEnPlazo();
         if (enPlazo.isEmpty()) {
             System.out.println(Colores.ERROR + "No se encontraron tareas" + Colores.RESET);
+            System.out.println(" ");
         } else {
             for (int i=0;i<enPlazo.size();i++) {
                 System.out.println(Colores.EXITO + enPlazo.get(i) + Colores.RESET);
             }
+            System.out.println(" ");
         }
     }
 
     public void tareasFuturas() {
-        ArrayList<Tarea> futuras = gestor.obtenerTareasFuturas();
+        List<Tarea> futuras = gestor.obtenerTareasFuturas();
         if (futuras.isEmpty()) {
             System.out.println(Colores.ERROR + "No se encontraron tareas" + Colores.RESET);
+            System.out.println(" ");
         } else {
             for (int i=0;i<futuras.size();i++) {
-                System.out.println(Colores.ADVERTENCIA + futuras.get(i) + Colores.RESET);
+                System.out.println(Colores.ADVERTENCIA + futuras.get(i) + Colores.RESET);System.out.println(" ");
             }
+            System.out.println(" ");
+
         }
     }
 }

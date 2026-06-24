@@ -17,7 +17,7 @@ public class MenuCategoria {
     public void menuCategoria() {
         int opcion;
         do {
-            System.out.println(Colores.TITULO + "---MENU DE CATEGORIA---" + Colores.RESET);
+            System.out.println(Colores.TITULO + "\n---MENU DE CATEGORIA---" + Colores.RESET);
             System.out.println(Colores.MENU + "1. Crear categoria" + Colores.RESET);
             System.out.println(Colores.MENU + "2. Salir" + Colores.RESET);
 
@@ -53,8 +53,13 @@ public class MenuCategoria {
         String descripcion = tcld.nextLine();
 
         Categoria categoria = new Categoria(idCategoria, nombre, descripcion);
-        gestor.agregarCategoria(categoria);
-        System.out.println(Colores.EXITO + "Categoria creada correctamente" + Colores.RESET);
-        System.out.println(" ");
+        boolean creado = gestor.agregarCategoria(categoria);
+        if (creado) {
+            System.out.println(Colores.EXITO + "Categoria creada correctamente" + Colores.RESET);
+            System.out.println(" ");
+        } else {
+            System.out.println(Colores.ERROR + "La categoria ya existe (ID)" + Colores.RESET);
+            System.out.println(" ");
+        }
     }
 }

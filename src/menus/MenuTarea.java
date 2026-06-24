@@ -19,7 +19,7 @@ public class MenuTarea {
     public void menuTarea() {
         int opcion;
         do {
-            System.out.println(Colores.TITULO + "---MENU DE TAREA---" + Colores.RESET);
+            System.out.println(Colores.TITULO + "\n---MENU DE TAREA---" + Colores.RESET);
             System.out.println(Colores.MENU + "1. Crear tarea" + Colores.RESET);
             System.out.println(Colores.MENU + "2. Modificar tarea" + Colores.RESET);
             System.out.println(Colores.MENU + "3. Eliminar tarea" + Colores.RESET);
@@ -120,9 +120,14 @@ public class MenuTarea {
         }
 
         Tarea tarea = new Tarea(idTarea, titulo, descripcion, fechaCreacion, fechaLimite, estadoInicial, prioridadEnum, categoriaSeleccionada);
-        gestor.agregarTarea(tarea);
-        System.out.println(Colores.EXITO + "Tarea creada exitosamente" + Colores.RESET);
-        System.out.println(" ");
+        boolean creado = gestor.agregarTarea(tarea);
+        if (creado) {
+            System.out.println(Colores.EXITO + "Tarea creada correctamente" + Colores.RESET);
+            System.out.println(" ");
+        } else {
+            System.out.println(Colores.ERROR + "La tarea ya existe (ID)" + Colores.RESET);
+            System.out.println(" ");
+        }
     }
 
     public void modificarTarea() {

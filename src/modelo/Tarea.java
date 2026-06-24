@@ -2,7 +2,7 @@ package modelo;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
+import java.util.Set;
 
 public class Tarea {
     private int id;
@@ -13,7 +13,7 @@ public class Tarea {
     private EstadoTarea estado;
     private Prioridad prioridad;
     private Categoria categoria;
-    private ArrayList<Tarea> tareas;
+    private Set<Tarea> tareas;
 
     public Tarea(int id, String titulo, String descripcion, LocalDate fechaCreacion, LocalDate fechaLimite, EstadoTarea estado, Prioridad prioridad, Categoria categoria) {
         this.id = id;
@@ -110,5 +110,18 @@ public class Tarea {
                Prioridad: %s
                Fecha Limite: %s 
                """.formatted(id, titulo, descripcion, estado, prioridad, fechaLimite);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Tarea)) return false;
+        Tarea tarea = (Tarea) o;
+        return id == tarea.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Integer.hashCode(id);
     }
 }

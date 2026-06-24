@@ -1,27 +1,26 @@
 package gestor;
 import modelo.*;
-import util.Colores;
+import util.*;
 
 import java.util.*;
 
 public class GestorTareas {
-    private ArrayList<Usuario> usuarios;
-    private ArrayList<Categoria> categorias;
-    private ArrayList<Tarea> tareas;
-    private EstadoTarea estado;
+    private Set<Usuario> usuarios;
+    private Set<Categoria> categorias;
+    private Set<Tarea> tareas;
 
     public GestorTareas() {
-        usuarios = new ArrayList<>();
-        categorias = new ArrayList<>();
-        tareas = new ArrayList<>();
+        usuarios = new HashSet<>();
+        categorias = new HashSet<>();
+        tareas = new HashSet<>();
     }
 
-    public void agregarTarea(Tarea tarea) {
-        tareas.add(tarea);
+    public boolean agregarTarea(Tarea tarea) {
+        return tareas.add(tarea);
     }
 
-    public void agregarUsuario(Usuario usuario) {
-        usuarios.add(usuario);
+    public boolean agregarUsuario(Usuario usuario) {
+        return usuarios.add(usuario);
     }
 
     public Optional<Usuario> buscarUsuario(int id){
@@ -33,8 +32,8 @@ public class GestorTareas {
         return Optional.empty();
     }
 
-    public void agregarCategoria(Categoria categoria){
-        categorias.add(categoria);
+    public boolean agregarCategoria(Categoria categoria){
+       return categorias.add(categoria);
     }
 
     public Optional<Tarea> buscarTarea(int id){
@@ -64,8 +63,8 @@ public class GestorTareas {
         }
     }
 
-    public ArrayList<Tarea> buscarPorPrioridad(Prioridad prioridad){
-        ArrayList<Tarea> tareasPrioridad = new ArrayList<>();
+    public List<Tarea> buscarPorPrioridad(Prioridad prioridad){
+        List<Tarea> tareasPrioridad = new ArrayList<>();
         for (Tarea tarea : tareas) {
             if (tarea.getPrioridad() == prioridad) {
                 tareasPrioridad.add(tarea);
@@ -75,8 +74,8 @@ public class GestorTareas {
         return tareasPrioridad;
     }
 
-    public ArrayList<Tarea> buscarPorEstado(EstadoTarea estado){
-        ArrayList<Tarea> tareasEstado = new ArrayList<>();
+    public List<Tarea> buscarPorEstado(EstadoTarea estado){
+        List<Tarea> tareasEstado = new ArrayList<>();
         for (Tarea tarea : tareas) {
             if (tarea.getEstado() == estado) {
                 tareasEstado.add(tarea);
@@ -99,8 +98,8 @@ public class GestorTareas {
         }
     }
 
-    public ArrayList<Tarea> obtenerTareasPendientes(){
-        ArrayList<Tarea> pendientes = new ArrayList<>();
+    public List<Tarea> obtenerTareasPendientes(){
+        List<Tarea> pendientes = new ArrayList<>();
         for (Tarea tarea : tareas) {
             if (tarea.getEstado() == EstadoTarea.PENDIENTE) {
                 pendientes.add(tarea);
@@ -110,8 +109,8 @@ public class GestorTareas {
         return pendientes;
     }
 
-    public ArrayList<Tarea> obtenerTareasCompletadas(){
-        ArrayList<Tarea> completadas = new ArrayList<>();
+    public List<Tarea> obtenerTareasCompletadas(){
+        List<Tarea> completadas = new ArrayList<>();
         for (Tarea tarea : tareas) {
             if (tarea.getEstado() == EstadoTarea.COMPLETADA) {
                 completadas.add(tarea);
@@ -122,16 +121,12 @@ public class GestorTareas {
     }
 
     public void eliminarTarea(int idTarea) {
-        for (int i=0;i<tareas.size();i++) {
-            if (tareas.get(i).getId() == idTarea) {
-                tareas.remove(i);
-                break;
-            }
-        }
+        Optional<Tarea> tarea = buscarTarea(idTarea);
+        tarea.ifPresent(tareas::remove);
     }
 
-    public ArrayList<Tarea> mostrarCategoria(int idCategoria) {
-        ArrayList<Tarea> resultado = new ArrayList<>();
+    public List<Tarea> mostrarCategoria(int idCategoria) {
+        List<Tarea> resultado = new ArrayList<>();
 
         for (Tarea tarea : tareas) {
             if (tarea.getCategoria() != null &&
@@ -144,8 +139,8 @@ public class GestorTareas {
         return resultado;
     }
 
-    public ArrayList<Tarea> obtenerTareasVencidas() {
-        ArrayList<Tarea> vencidas = new ArrayList<>();
+    public List<Tarea> obtenerTareasVencidas() {
+        List<Tarea> vencidas = new ArrayList<>();
         for (Tarea tarea : tareas) {
             if (tarea.getSituacionTemporal()==SituacionTemporal.VENCIDA) {
                 vencidas.add(tarea);
@@ -154,8 +149,8 @@ public class GestorTareas {
         return vencidas;
     }
 
-    public ArrayList<Tarea> obtenerTareasProximas() {
-        ArrayList<Tarea> proximas = new ArrayList<>();
+    public List<Tarea> obtenerTareasProximas() {
+        List<Tarea> proximas = new ArrayList<>();
         for (Tarea tarea : tareas) {
             if (tarea.getSituacionTemporal()==SituacionTemporal.PROXIMA_A_VENCER) {
                 proximas.add(tarea);
@@ -164,8 +159,8 @@ public class GestorTareas {
         return proximas;
     }
 
-    public ArrayList<Tarea> obtenerVenceHoy() {
-        ArrayList<Tarea> venceHoy = new ArrayList<>();
+    public List<Tarea> obtenerVenceHoy() {
+        List<Tarea> venceHoy = new ArrayList<>();
         for (Tarea tarea : tareas) {
             if (tarea.getSituacionTemporal()==SituacionTemporal.VENCE_HOY) {
                 venceHoy.add(tarea);
@@ -175,8 +170,8 @@ public class GestorTareas {
         return venceHoy;
     }
 
-    public ArrayList<Tarea> obtenerEnPlazo() {
-        ArrayList<Tarea> enPlazo = new ArrayList<>();
+    public List<Tarea> obtenerEnPlazo() {
+        List<Tarea> enPlazo = new ArrayList<>();
         for (Tarea tarea : tareas) {
             if (tarea.getSituacionTemporal()==SituacionTemporal.EN_PLAZO){
                 enPlazo.add(tarea);
@@ -185,8 +180,8 @@ public class GestorTareas {
         return enPlazo;
     }
 
-    public ArrayList<Tarea> obtenerTareasFuturas() {
-        ArrayList<Tarea> tareaFutura = new ArrayList<>();
+    public List<Tarea> obtenerTareasFuturas() {
+        List<Tarea> tareaFutura = new ArrayList<>();
         for (Tarea tarea : tareas) {
             if (tarea.esFutura()) {
                 tareaFutura.add(tarea);

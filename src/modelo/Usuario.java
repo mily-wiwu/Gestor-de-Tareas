@@ -1,17 +1,16 @@
     package modelo;
 
-    import java.util.ArrayList;
-    import java.util.Optional;
+    import java.util.*;
 
     public class Usuario {
         private int id;
         private String nombre;
-        private ArrayList<Tarea> tareas;
+        private Set<Tarea> tareas;
 
         public Usuario (int id, String nombre) {
             this.id = id;
             this.nombre = nombre;
-            this.tareas = new ArrayList<>();
+            this.tareas = new HashSet<>();
         }
 
         public int getId() {
@@ -22,15 +21,23 @@
             tareas.add(tarea);
         }
         public void eliminarTarea(int idTarea) {
-            for (int i=0; i<tareas.size();i++) {
-                if (tareas.get(i).getId() == idTarea) {
-                    tareas.remove(i);
-                    break;
-                }
-            }
+            tareas.removeIf(t -> t.getId() == idTarea);
         }
 
-        public ArrayList<Tarea> tareasUsuario (){
+        public Collection<Tarea> tareasUsuario (){
             return tareas;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (!(o instanceof Usuario)) return false;
+            Usuario usuario = (Usuario) o;
+            return id == usuario.id;
+        }
+
+        @Override
+        public int hashCode() {
+            return Integer.hashCode(id);
         }
     }
