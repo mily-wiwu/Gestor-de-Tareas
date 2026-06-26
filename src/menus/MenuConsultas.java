@@ -3,7 +3,6 @@ package menus;
 import gestor.GestorTareas;
 import modelo.*;
 import util.*;
-
 import java.util.*;
 
 public class MenuConsultas {

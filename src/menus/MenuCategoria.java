@@ -3,7 +3,7 @@ package menus;
 import gestor.*;
 import modelo.*;
 import util.*;
-import java.util.Scanner;
+import java.util.*;
 
 public class MenuCategoria {
     private Scanner tcld;

@@ -17,6 +17,10 @@
             return id;
         }
 
+        public String getNombre() {
+            return nombre;
+        }
+
         public void agregarTarea(Tarea tarea){
             tareas.add(tarea);
         }

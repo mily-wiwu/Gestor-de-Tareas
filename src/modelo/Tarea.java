@@ -14,8 +14,9 @@ public class Tarea {
     private Prioridad prioridad;
     private Categoria categoria;
     private Set<Tarea> tareas;
+    private Usuario usuario;
 
-    public Tarea(int id, String titulo, String descripcion, LocalDate fechaCreacion, LocalDate fechaLimite, EstadoTarea estado, Prioridad prioridad, Categoria categoria) {
+    public Tarea(int id, String titulo, String descripcion, LocalDate fechaCreacion, LocalDate fechaLimite, EstadoTarea estado, Prioridad prioridad, Categoria categoria, Usuario usuario) {
         this.id = id;
         this.titulo = titulo;
         this.descripcion = descripcion;
@@ -24,6 +25,7 @@ public class Tarea {
         this.estado = estado;
         this.prioridad = prioridad;
         this.categoria = categoria;
+        this.usuario = getUsuario();
     }
 
     public int getId() {
@@ -78,6 +80,10 @@ public class Tarea {
         this.categoria = categoria;
     }
 
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
     public SituacionTemporal getSituacionTemporal() {
         SituacionTemporal situacion;
         if (fechaLimite.isBefore(LocalDate.now())) {
@@ -98,6 +104,10 @@ public class Tarea {
 
     public boolean esFutura() {
         return fechaLimite.isAfter(LocalDate.now());
+    }
+
+    public Usuario getUsuario(){
+        return usuario;
     }
 
     @Override

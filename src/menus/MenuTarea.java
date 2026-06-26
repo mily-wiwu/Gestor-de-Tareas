@@ -4,8 +4,7 @@ import gestor.*;
 import modelo.*;
 import util.*;
 import java.time.LocalDate;
-import java.util.Optional;
-import java.util.Scanner;
+import java.util.*;
 
 public class MenuTarea {
     private Scanner tcld;
@@ -101,7 +100,7 @@ public class MenuTarea {
         } else {
             prioridadEnum = Prioridad.BAJA;
         }
-        System.out.println(Colores.TITULO + "CATEGORIAS" + Colores.RESET);
+        System.out.println(Colores.TITULO + "\nCATEGORIAS" + Colores.RESET);
         GestorTareas.getInstancia().listarCategorias();
         Categoria categoriaSeleccionada = null;
         while (categoriaSeleccionada == null) {
@@ -117,7 +116,7 @@ public class MenuTarea {
             }
         }
 
-        Tarea tarea = new Tarea(idTarea, titulo, descripcion, fechaCreacion, fechaLimite, estadoInicial, prioridadEnum, categoriaSeleccionada);
+        Tarea tarea = new Tarea(idTarea, titulo, descripcion, fechaCreacion, fechaLimite, estadoInicial, prioridadEnum, categoriaSeleccionada, null);
         boolean creado = GestorTareas.getInstancia().agregarTarea(tarea);
         if (creado) {
             System.out.println(Colores.EXITO + "Tarea creada correctamente" + Colores.RESET);
@@ -129,7 +128,7 @@ public class MenuTarea {
     }
 
     public void modificarTarea() {
-        System.out.println(Colores.TITULO + "MODIFICACIONES" + Colores.RESET);
+        System.out.println(Colores.TITULO + "\nMODIFICACIONES" + Colores.RESET);
         System.out.println(Colores.MENU + "1. Titulo" + Colores.RESET);
         System.out.println(Colores.MENU + "2. Descripcion" + Colores.RESET);
         System.out.println(Colores.MENU + "3. Fecha Limite" + Colores.RESET);
@@ -187,7 +186,7 @@ public class MenuTarea {
                     tarea.setPrioridad(prioridadEnum);
                     break;
                 case 5:
-                    System.out.println(Colores.TITULO + "CATEGORIAS" + Colores.RESET);
+                    System.out.println(Colores.TITULO + "\nCATEGORIAS" + Colores.RESET);
                     GestorTareas.getInstancia().listarCategorias();
                     System.out.print(Colores.INGRESO + "Ingrese el ID de la categoria deseada: " + Colores.RESET);
                     int idCategoria = tcld.nextInt();

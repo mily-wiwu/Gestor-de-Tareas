@@ -67,6 +67,7 @@ public class GestorTareas {
         for (Usuario usuario : usuarios) {
             if (usuario.getId() == (idUsuario)) {
                 usuario.agregarTarea(tarea);
+                tarea.setUsuario(usuario);
             }
         }
     }
@@ -198,5 +199,138 @@ public class GestorTareas {
 
         tareaFutura.sort(Comparator.comparing(Tarea::getFechaLimite));
         return tareaFutura;
+    }
+
+    public int totalTareas() {
+        return tareas.size();
+    }
+
+    public int totalPendientes() {
+        List<Tarea> pendientes = new ArrayList<>();
+        for (Tarea tarea : tareas) {
+            if (tarea.getEstado() == EstadoTarea.PENDIENTE) {
+                pendientes.add(tarea);
+            }
+        }
+        return pendientes.size();
+    }
+
+    public int totalProgreso() {
+        List<Tarea> progreso = new ArrayList<>();
+        for (Tarea tarea : tareas) {
+            if (tarea.getEstado()==EstadoTarea.EN_PROGRESO) {
+                progreso.add(tarea);
+            }
+        }
+        return progreso.size();
+    }
+
+    public int totalCompletadas() {
+        List<Tarea> completadas = new ArrayList<>();
+        for (Tarea tarea : tareas) {
+            if (tarea.getEstado()==EstadoTarea.COMPLETADA) {
+                completadas.add(tarea);
+            }
+        }
+
+        return completadas.size();
+    }
+
+    public int totalCanceladas() {
+        List<Tarea> canceladas = new ArrayList<>();
+        for (Tarea tarea : tareas) {
+            if (tarea.getEstado()==EstadoTarea.CANCELADA) {
+                canceladas.add(tarea);
+            }
+        }
+        return canceladas.size();
+    }
+
+    public int totalVencidas() {
+        List<Tarea> vencidas = new ArrayList<>();
+        for (Tarea tarea : tareas) {
+            if (tarea.getSituacionTemporal()==SituacionTemporal.VENCIDA) {
+                vencidas.add(tarea);
+            }
+        }
+        return vencidas.size();
+    }
+
+    public int totalProximas() {
+        List<Tarea> proximas = new ArrayList<>();
+        for (Tarea tarea : tareas) {
+            if (tarea.getSituacionTemporal()==SituacionTemporal.PROXIMA_A_VENCER) {
+                proximas.add(tarea);
+            }
+        }
+        return proximas.size();
+    }
+
+    public int totalHoy() {
+        List<Tarea> hoy = new ArrayList<>();
+        for (Tarea tarea : tareas) {
+            if (tarea.getSituacionTemporal()==SituacionTemporal.VENCE_HOY){
+                hoy.add(tarea);
+            }
+        }
+        return hoy.size();
+    }
+
+    public int totalAlta() {
+        List<Tarea> altas = new ArrayList<>();
+        for (Tarea tarea : tareas) {
+            if (tarea.getPrioridad()==Prioridad.ALTA) {
+                altas.add(tarea);
+            }
+        }
+        return altas.size();
+    }
+
+    public int totalMedia() {
+        List<Tarea> medias = new ArrayList<>();
+        for (Tarea tarea : tareas) {
+            if (tarea.getPrioridad()==Prioridad.MEDIA) {
+                medias.add(tarea);
+            }
+        }
+        return medias.size();
+    }
+
+    public int totalBaja() {
+        List<Tarea> bajas = new ArrayList<>();
+        for (Tarea tarea : tareas) {
+            if (tarea.getPrioridad()==Prioridad.BAJA) {
+                bajas.add(tarea);
+            }
+        }
+        return bajas.size();
+    }
+
+    public int contadorCategoria(Categoria categoria) {
+        int contador = 0;
+        for (Tarea tarea : tareas) {
+            if (tarea.getCategoria().equals(categoria)) {
+                contador++;
+            }
+        }
+        return contador;
+    }
+
+    public ArrayList<Categoria> getCategorias() {
+        return new ArrayList<>(categorias);
+    }
+
+    public int contadorUsuario(Usuario usuario) {
+        int contador = 0;
+        for (Tarea tarea : tareas) {
+            if (tarea.getUsuario()!= null && tarea.getUsuario().getId()==usuario.getId()) {
+                contador++;
+            }
+        }
+        return contador;
+    }
+
+    public ArrayList<Usuario> getUsuarios() {
+        return new ArrayList<>(usuarios);
     }
 }

@@ -13,6 +13,7 @@ public class Main {
         MenuCategoria menuCategoria = new MenuCategoria(tcld);
         MenuTarea menuTarea = new MenuTarea(tcld);
         MenuConsultas menuConsultas = new MenuConsultas(tcld);
+        MenuReporte menuReporte = new MenuReporte(tcld);
         int opcion;
 
         do {
@@ -21,7 +22,8 @@ public class Main {
             System.out.println(Colores.MENU + "2. Gestion de categoria" + Colores.RESET);
             System.out.println(Colores.MENU + "3. Gestion de tareas" + Colores.RESET);
             System.out.println(Colores.MENU + "4. Consultas" + Colores.RESET);
-            System.out.println(Colores.MENU + "5. Salir" + Colores.RESET);
+            System.out.println(Colores.MENU + "5. Reportes" + Colores.RESET);
+            System.out.println(Colores.MENU + "6. Salir" + Colores.RESET);
 
             System.out.print(Colores.INGRESO + "\nIngrese una opcion: " + Colores.RESET);
             opcion = tcld.nextInt();
@@ -41,12 +43,15 @@ public class Main {
                     menuConsultas.menuConsultas();
                     break;
                 case 5:
+                    menuReporte.menuReporte();
+                    break;
+                case 6:
                     System.out.println(Colores.INFO + "SALIENDO..." + Colores.RESET);
                     break;
                 default:
                     System.out.println(Colores.ERROR + "Opcion no valida" + Colores.RESET);
             }
-        } while(opcion!=5);
+        } while(opcion!=6);
         tcld.close();
     }
 }
