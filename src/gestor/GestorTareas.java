@@ -2,7 +2,12 @@ package gestor;
 import modelo.*;
 import util.*;
 
+import java.awt.*;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
+import java.util.List;
 
 public class GestorTareas {
     private static GestorTareas instancia;
@@ -332,5 +337,47 @@ public class GestorTareas {
 
     public ArrayList<Usuario> getUsuarios() {
         return new ArrayList<>(usuarios);
+    }
+
+    public void exportarUsuario() {
+        try (FileWriter writer = new FileWriter("usuario.txt")) {
+            for (Usuario usuario : usuarios) {
+                writer.write(usuario.getId() + ";" + usuario.getNombre());
+                writer.write("\n");
+            }
+            System.out.println(Colores.EXITO + "Usuarios exportados exitosamente" + Colores.RESET);
+        } catch (IOException e) {
+            System.out.println(Colores.ERROR + "Error de exportacion: " + e.getMessage() + Colores.RESET);
+        }
+    }
+
+    public void exportarCategoria() {
+        try (FileWriter writer = new FileWriter("categoria.txt")){
+            for (Categoria categoria : categorias) {
+                writer.write(categoria.getId() + ";" + categoria.getNombre() + categoria.getDescripcion());
+                writer.write("\n");
+            }
+            System.out.println(Colores.EXITO + "Categorias exportadas existosamente" + Colores.RESET);
+        } catch (IOException e) {
+            System.out.println(Colores.ERROR + "Error de exportacion: " + e.getMessage() + Colores.RESET);
+        }
+    }
+
+    public void exportarTareas() {
+        try (FileWriter writer = new FileWriter("tareas.txt")) {
+            for (Tarea tarea : tareas) {
+                writer.write(tarea.getId() + ";" + tarea.getTitulo() + ";" + tarea.getDescripcion() + ";" + tarea.getFechaCreacion() + ";" + tarea.getFechaLimite() + ";" + tarea.getEstado() + ";" + tarea.getPrioridad() + ";" + tarea.getCategoria() + ";" + tarea.getUsuario());
+                writer.write("\n");
+            }
+            System.out.println(Colores.EXITO + "Tareas exportadas exitosamente" + Colores.RESET);
+        } catch (IOException e){
+            System.out.println(Colores.ERROR + "Error de exportacion: " + e.getMessage() + Colores.RESET);
+        }
+    }
+
+    public void exportarTodo(){
+        exportarTareas();
+        exportarUsuario();
+        exportarCategoria();
     }
 }

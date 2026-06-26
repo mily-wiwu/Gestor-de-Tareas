@@ -19,6 +19,10 @@ public class Categoria {
         return nombre;
     }
 
+    public String getDescripcion() {
+        return descripcion;
+    }
+
     @Override
     public String toString() {
         return "ID: " + id + "\nNombre: " + nombre + "\nDescripcion: " + descripcion;

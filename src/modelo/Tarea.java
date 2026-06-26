@@ -32,6 +32,18 @@ public class Tarea {
         return id;
     }
 
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public LocalDate getFechaCreacion() {
+        return fechaCreacion;
+    }
+
     public LocalDate getFechaLimite() {
         return fechaLimite;
     }
