@@ -5,13 +5,39 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d55a83ce-b721-4788-9a22-e6bc6b067b4f" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/persistencia/ConexionSQLite.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/persistencia/ConexionSQLite.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/persistencia/InitDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/persistencia/InitDB.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/menus/MenuConsultas.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/menus/MenuConsultas.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/menus/MenuTarea.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/menus/MenuTarea.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/modelo/Tarea.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/modelo/Tarea.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/persistencia/TareaDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/persistencia/TareaDAO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/excepciones/CategoriaNoEncontradaException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/excepciones/DuplicadoException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/excepciones/TareaInvalidaException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/excepciones/TareaNoEncontradaException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/excepciones/UsuarioNoEncontradoException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gestor/GestorTareas.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/Gestor_de_tareas/gestor/GestorTareas.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/Gestor_de_tareas/servicio/CategoriaService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/Gestor_de_tareas/servicio/CategoriaService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/Gestor_de_tareas/servicio/TareaService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/Gestor_de_tareas/servicio/TareaService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/Gestor_de_tareas/servicio/UsuarioService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/Gestor_de_tareas/servicio/UsuarioService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/menus/MenuCategoria.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/menus/MenuConsultas.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/menus/MenuDatos.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/menus/MenuExportacion.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/menus/MenuReporte.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/menus/MenuTarea.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/menus/MenuUsuarios.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modelo/Categoria.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modelo/EstadoTarea.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modelo/Prioridad.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modelo/SituacionTemporal.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modelo/Tarea.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modelo/Usuario.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/persistencia/CategoriaDAO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/persistencia/ConexionSQLite.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/persistencia/InitDB.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/persistencia/TareaDAO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/persistencia/UsuarioDAO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/util/Colores.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,8 +47,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Exception" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -41,24 +67,43 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
-    &quot;Application.TestDB.executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Main.executor": "Run",
+    "Application.TestDB.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "Spring Boot.GestorDeTareasApplication.executor": "Run",
+    "git-widget-placeholder": "migracion-springboot",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "G:/Mi unidad/Universidad/2026-1/POO/Gestor-de-tareas",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.16699219",
+    "project.structure.side.proportion": "0.0",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
+  <component name="RunManager">
+    <configuration name="GestorDeTareasApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="Gestor-de-tareas" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.Gestor_de_tareas.GestorDeTareasApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -80,6 +125,8 @@
       <workItem from="1783402295286" duration="5000" />
       <workItem from="1783730481316" duration="9532000" />
       <workItem from="1783753866334" duration="15029000" />
+      <workItem from="1792532008003" duration="51000" />
+      <workItem from="1792532098710" duration="1932000" />
     </task>
     <servers />
   </component>
