@@ -30,4 +30,7 @@ public class CategoriaService {
         return categoriaDAO.listar();
     }
 
+    public boolean eliminarCategoria(int id) {
+        return categoriaDAO.eliminar(id);
+    }
 }

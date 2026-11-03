@@ -20,30 +20,30 @@ public class UsuarioDAO {
 
         try (Connection conn = ConexionSQLite.conectar();
              PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setInt(1, u.getId());
+            ps.setString(1, u.getId());
             ps.setString(2, u.getNombre());
             ps.executeUpdate();
             return true;
 
         } catch (SQLException e) {
-            throw new DuplicadoException("Ya existe un usuario con ID " + u.getId());
+                e.printStackTrace();throw new RuntimeException("Error al guardar usuario", e);
         }
     }
 
-    public Optional<Usuario> buscarPorId(int id) {
+    public Optional<Usuario> buscarPorId(String id) {
 
         String sql = "SELECT * FROM usuario WHERE id = ?";
 
         try (Connection conn = ConexionSQLite.conectar();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setInt(1, id);
+            ps.setString(1, id);
 
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
                 Usuario u = new Usuario(
-                        rs.getInt("id"),
+                        rs.getString("id"),
                         rs.getString("nombre")
                 );
                 return Optional.of(u);
@@ -68,7 +68,7 @@ public class UsuarioDAO {
 
             while (rs.next()) {
                 lista.add(new Usuario(
-                        rs.getInt("id"),
+                        rs.getString("id"),
                         rs.getString("nombre")
                 ));
             }
@@ -80,14 +80,14 @@ public class UsuarioDAO {
         return lista;
     }
 
-    public boolean eliminar(int id) {
+    public boolean eliminar(String id) {
 
         String sql = "DELETE FROM usuario WHERE id = ?";
 
         try (Connection conn = ConexionSQLite.conectar();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setInt(1, id);
+            ps.setString(1, id);
             return ps.executeUpdate() > 0;
 
         } catch (Exception e) {
@@ -108,7 +108,7 @@ public class UsuarioDAO {
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, u.getNombre());
-            ps.setInt(2, u.getId());
+            ps.setString(2, u.getId());
 
             return ps.executeUpdate() > 0;
 

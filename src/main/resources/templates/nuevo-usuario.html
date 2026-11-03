@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuevo usuario</title>
+</head>
+<body>
+
+<h1>Crear un usuario</h1>
+
+<form th:action="@{/gestor-de-tareas/usuarios/nuevo}" method="post">
+    <label for="id">ID (RUT o Pasaporte):</label>
+    <br>
+    <input type="text" id="id" name="id" required>
+
+    <br><br>
+
+    <label for="nombre">Nombre:</label>
+    <br>
+    <textarea id="nombre" name="nombre"></textarea>
+
+    <br><br>
+
+    <button type="submit">Crear usuario</button>
+</form>
+
+<br><br>
+
+<a th:href="@{/gestor-de-tareas/usuarios}">Volver a mis usuarios</a>
+
+</body>
+</html>

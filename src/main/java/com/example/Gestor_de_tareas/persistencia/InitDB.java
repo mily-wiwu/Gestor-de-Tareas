@@ -8,16 +8,15 @@ public class InitDB {
         Statement st = conn.createStatement();
 
         st.execute("""
-            CREATE TABLE IF NOT EXISTS usuario (
-                id INTEGER PRIMARY KEY,
-                nombre TEXT
-            );
+        CREATE TABLE IF NOT EXISTS usuario (
+        id TEXT PRIMARY KEY,
+        nombre TEXT);
         """);
 
 
         st.execute("""
             CREATE TABLE IF NOT EXISTS categoria (
-                id INTEGER PRIMARY KEY,
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
                 nombre TEXT,
                 descripcion TEXT
             );

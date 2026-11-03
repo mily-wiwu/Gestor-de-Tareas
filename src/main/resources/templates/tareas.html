@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis tareas</title>
+</head>
+<body>
+
+<h1>Mis tareas</h1>
+
+<p th:if="${#lists.isEmpty(tareas)}">
+    No hay tareas registradas.
+</p>
+
+<table th:unless="${#lists.isEmpty(tareas)}">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Título</th>
+        <th>Descripción</th>
+        <th>Estado</th>
+        <th>Prioridad</th>
+        <th>Fecha límite</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr th:each="tarea : ${tareas}">
+        <td th:text="${tarea.id}"></td>
+        <td th:text="${tarea.titulo}"></td>
+        <td th:text="${tarea.descripcion}"></td>
+        <td th:text="${tarea.estado}"></td>
+        <td th:text="${tarea.prioridad}"></td>
+        <td th:text="${tarea.fechaLimite}"></td>
+        <td>
+            <form th:action="@{/gestor-de-tareas/tareas/eliminar}" method="post">
+                <input type="hidden" name="id" th:value="${tarea.id}">
+                <button type="submit">Eliminar</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<a th:href="@{/gestor-de-tareas/tareas/nueva}">Crear tarea</a>
+<br>
+<a th:href="@{/gestor-de-tareas}">Volver al inicio</a>
+</body>
+</html>

@@ -1,10 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nueva categoria</title>
 </head>
 <body>
-$END$
+
+<h1>Crear una categoria</h1>
+
+<form th:action="@{/gestor-de-tareas/categorias/nueva}" method="post">
+    <label for="nombre">Nombre:</label>
+    <br>
+    <input type="text" id="nombre" name="nombre" required>
+
+    <br><br>
+
+    <label for="descripcion">Descripción:</label>
+    <br>
+    <textarea id="descripcion" name="descripcion"></textarea>
+
+    <br><br>
+
+    <button type="submit">Crear categoria</button>
+</form>
+
+<br><br>
+
+<a th:href="@{/gestor-de-tareas/categorias}">Volver a mis categorias</a>
+
 </body>
 </html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nueva tarea</title>
+</head>
+<body>
+
+<h1>Crear una tarea</h1>
+
+<form th:action="@{/gestor-de-tareas/tareas/nueva}" method="post">
+    <label for="titulo">Título:</label>
+    <br>
+    <input type="text" id="titulo" name="titulo" required>
+
+    <br><br>
+
+    <label for="descripcion">Descripción:</label>
+    <br>
+    <textarea id="descripcion" name="descripcion"></textarea>
+
+    <br><br>
+
+    <label for="categoria">Categoría:</label>
+    <br>
+    <select id="categoria" name="idCategoria" required>
+        <option value="">Selecciona una categoría</option>
+
+        <option th:each="categoria : ${categorias}"
+                th:value="${categoria.id}"
+                th:text="${categoria.nombre}">
+        </option>
+    </select>
+
+    <br><br>
+
+    <label for="fechaLimite">Fecha límite:</label>
+    <br>
+    <input type="date" id="fechaLimite" name="fechaLimite" required>
+
+    <br><br>
+
+    <label for="prioridad">Prioridad:</label>
+    <br>
+    <select id="prioridad" name="prioridad" required>
+        <option value="">Selecciona una prioridad</option>
+        <option value="ALTA">Alta</option>
+        <option value="MEDIA">Media</option>
+        <option value="BAJA">Baja</option>
+    </select>
+
+    <br><br>
+
+    <button type="submit">Crear tarea</button>
+</form>
+
+<br><br>
+
+<a th:href="@{/gestor-de-tareas/tareas}">Volver a mis tareas</a>
+
+</body>
+</html>

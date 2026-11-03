@@ -20,12 +20,16 @@ public class UsuarioService {
         return usuarioDAO.guardar(usuario);
     }
 
-    public Usuario buscarUsuario(int id) {
+    public Usuario buscarUsuario(String id) {
         return usuarioDAO.buscarPorId(id).orElseThrow(() ->
                 new UsuarioNoEncontradoException("No existe el usuario con ID " + id));
     }
 
     public List<Usuario> listarUsuarios() {
         return usuarioDAO.listar();
+    }
+
+    public void eliminarUsuario(String id) {
+        usuarioDAO.eliminar(id);
     }
 }

@@ -1,14 +1,17 @@
 package com.example.Gestor_de_tareas.modelo;
-    public class Usuario {
-        private int id;
+
+import java.util.Objects;
+
+public class Usuario {
+        private String id;
         private String nombre;
 
-        public Usuario(int id, String nombre) {
+        public Usuario(String id, String nombre) {
             this.id = id;
             this.nombre = nombre;
         }
 
-        public int getId() {
+        public String getId() {
             return id;
         }
 
@@ -26,6 +29,6 @@ package com.example.Gestor_de_tareas.modelo;
 
         @Override
         public int hashCode() {
-            return Integer.hashCode(id);
+            return Objects.hash(id);
         }
     }

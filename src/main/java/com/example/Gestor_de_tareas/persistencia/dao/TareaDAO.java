@@ -24,27 +24,35 @@ public class TareaDAO {
             throw new IllegalArgumentException("Tarea inválida");
         }
 
-        String sql = "INSERT INTO tarea(id, titulo, descripcion, fechaCreacion, fechaLimite, estado, prioridad, categoria_id, usuario_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        try (Connection conn = ConexionSQLite.conectar(); PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setInt(1, t.getId());
-            ps.setString(2, t.getTitulo());
-            ps.setString(3, t.getDescripcion());
-            ps.setString(4, t.getFechaCreacion().toString());
-            ps.setString(5, t.getFechaLimite().toString());
-            ps.setString(6, t.getEstado().name());
-            ps.setString(7, t.getPrioridad().name());
-            ps.setInt(8, t.getCategoria().getId());
+        String sql = """
+        INSERT INTO tarea(
+        titulo, descripcion, fechaCreacion, fechaLimite,
+        estado, prioridad, categoria_id, usuario_id
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        """;
+
+        try (Connection conn = ConexionSQLite.conectar();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, t.getTitulo());
+            ps.setString(2, t.getDescripcion());
+            ps.setString(3, t.getFechaCreacion().toString());
+            ps.setString(4, t.getFechaLimite().toString());
+            ps.setString(5, t.getEstado().name());
+            ps.setString(6, t.getPrioridad().name());
+            ps.setInt(7, t.getCategoria().getId());
 
             if (t.getUsuario() == null) {
-                ps.setNull(9, Types.INTEGER);
+                ps.setNull(8, Types.INTEGER);
             } else {
-                ps.setInt(9, t.getUsuario().getId());
+                ps.setString(8, t.getUsuario().getId());
             }
 
             ps.executeUpdate();
             return true;
-        } catch (Exception e) {
-            throw new DuplicadoException("Ya existe una tarea con ID " + t.getId());
+
+        } catch (SQLException e) {
+            throw new RuntimeException("No se pudo guardar la tarea", e);
         }
     }
 
@@ -138,7 +146,7 @@ public class TareaDAO {
         }
 
         if (rs.getObject("usuario_id") != null) {
-            usuario = new Usuario(rs.getInt("usuario_id"), rs.getString("usuario_nombre"));
+            usuario = new Usuario(rs.getString("usuario_id"), rs.getString("usuario_nombre"));
         }
 
 
@@ -173,7 +181,7 @@ public class TareaDAO {
             if (t.getUsuario() == null) {
                 ps.setNull(8, Types.INTEGER);
             } else {
-                ps.setInt(8, t.getUsuario().getId());
+                ps.setString(8, t.getUsuario().getId());
             }
 
             ps.setInt(9, t.getId());
@@ -277,11 +285,11 @@ public class TareaDAO {
         return 0;
     }
 
-    public int contadorUsuario(int idUsuario) {
+    public int contadorUsuario(String idUsuario) {
         String sql = "SELECT COUNT(*) FROM tarea WHERE usuario_id = ?";
 
         try (Connection conn = ConexionSQLite.conectar(); PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setInt(1, idUsuario);
+            ps.setString(1, idUsuario);
 
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {

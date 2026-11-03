@@ -16,19 +16,17 @@ import java.util.Optional;
 public class CategoriaDAO {
 
     public boolean guardar(Categoria c) {
-        String sql = "INSERT INTO categoria(id, nombre, descripcion) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO categoria(nombre, descripcion) VALUES (?, ?)";
 
         try (Connection conn = ConexionSQLite.conectar();
              PreparedStatement ps = conn.prepareStatement(sql)) {
-
-            ps.setInt(1, c.getId());
-            ps.setString(2, c.getNombre());
-            ps.setString(3, c.getDescripcion());
+            ps.setString(1, c.getNombre());
+            ps.setString(2, c.getDescripcion());
 
             ps.executeUpdate();
             return true;
         } catch (Exception e) {
-            throw new DuplicadoException("Ya existe una categoria con ID " + c.getId());
+            throw new RuntimeException("Error al guardar la categoría: " + e.getMessage(), e);
         }
     }
 

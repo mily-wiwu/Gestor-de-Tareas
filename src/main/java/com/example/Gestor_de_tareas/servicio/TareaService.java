@@ -33,11 +33,11 @@ public class TareaService {
         return tareaDAO.listar();
     }
 
-    public void asignarTarea(int idUsuario, int idTarea) {
+    public void asignarTarea(String idUsuario, int idTarea) {
         Usuario usuario = usuarioService.buscarUsuario(idUsuario);
 
         Tarea tarea = tareaDAO.buscarPorId(idTarea)
-                .orElseThrow(() ->
+                    .orElseThrow(() ->
                         new TareaNoEncontradaException(
                                 "No existe la tarea con ID " + idTarea
                         ));
