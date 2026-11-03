@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="d55a83ce-b721-4788-9a22-e6bc6b067b4f" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/excepciones/CategoriaNoEncontradaException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/excepciones/DuplicadoException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/excepciones/TareaInvalidaException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/excepciones/TareaNoEncontradaException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/excepciones/UsuarioNoEncontradoException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gestor/GestorTareas.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/Gestor_de_tareas/gestor/GestorTareas.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/Gestor_de_tareas/servicio/CategoriaService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/Gestor_de_tareas/servicio/CategoriaService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/Gestor_de_tareas/servicio/TareaService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/Gestor_de_tareas/servicio/TareaService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/Gestor_de_tareas/servicio/UsuarioService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/Gestor_de_tareas/servicio/UsuarioService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/menus/MenuCategoria.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/menus/MenuConsultas.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/menus/MenuDatos.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/menus/MenuExportacion.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/menus/MenuReporte.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/menus/MenuTarea.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/menus/MenuUsuarios.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modelo/Categoria.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modelo/EstadoTarea.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modelo/Prioridad.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modelo/SituacionTemporal.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modelo/Tarea.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modelo/Usuario.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/persistencia/CategoriaDAO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/persistencia/ConexionSQLite.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/persistencia/InitDB.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/persistencia/TareaDAO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/persistencia/UsuarioDAO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/util/Colores.java" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Exception" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="DEPENDENCY_CHECKER_PROBLEMS_TAB" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 4
+}</component>
+  <component name="ProjectId" id="3FyntdT5MrpgMHsErlwgosXZfAo" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Main.executor": "Run",
+    "Application.TestDB.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "Spring Boot.GestorDeTareasApplication.executor": "Run",
+    "git-widget-placeholder": "migracion-springboot",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "G:/Mi unidad/Universidad/2026-1/POO/Gestor-de-tareas",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.16699219",
+    "project.structure.side.proportion": "0.0",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RunManager">
+    <configuration name="GestorDeTareasApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="Gestor-de-tareas" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.Gestor_de_tareas.GestorDeTareasApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.26830.84" />
+        <option value="bundled-js-predefined-d6986cc7102b-3aa1da707db6-JavaScript-IU-252.26830.84" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="d55a83ce-b721-4788-9a22-e6bc6b067b4f" name="Changes" comment="" />
+      <created>1783056397954</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1783056397954</updated>
+      <workItem from="1783056407759" duration="4551000" />
+      <workItem from="1783112931677" duration="7041000" />
+      <workItem from="1783215595161" duration="8751000" />
+      <workItem from="1783402295286" duration="5000" />
+      <workItem from="1783730481316" duration="9532000" />
+      <workItem from="1783753866334" duration="15029000" />
+      <workItem from="1792532008003" duration="51000" />
+      <workItem from="1792532098710" duration="1932000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

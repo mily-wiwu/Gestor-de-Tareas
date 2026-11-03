@@ -4,6 +4,10 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
+gestor.db
+gestor.db-shm
+gestor.db-wal
+
 ### STS ###
 .apt_generated
 .classpath
