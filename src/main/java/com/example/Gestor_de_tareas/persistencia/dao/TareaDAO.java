@@ -158,9 +158,7 @@ public class TareaDAO {
         UPDATE tarea
         SET titulo = ?,
             descripcion = ?,
-            fechaCreacion = ?,
             fechaLimite = ?,
-            estado = ?,
             prioridad = ?,
             categoria_id = ?,
             usuario_id = ?
@@ -172,22 +170,21 @@ public class TareaDAO {
 
             ps.setString(1, t.getTitulo());
             ps.setString(2, t.getDescripcion());
-            ps.setString(3, t.getFechaCreacion().toString());
-            ps.setString(4, t.getFechaLimite().toString());
-            ps.setString(5, t.getEstado().name());
-            ps.setString(6, t.getPrioridad().name());
-            ps.setInt(7, t.getCategoria().getId());
+            ps.setString(3, t.getFechaLimite().toString());
+            ps.setString(4, t.getPrioridad().name());
+            ps.setInt(5, t.getCategoria().getId());
 
             if (t.getUsuario() == null) {
-                ps.setNull(8, Types.INTEGER);
+                ps.setNull(6, Types.VARCHAR);
             } else {
-                ps.setString(8, t.getUsuario().getId());
+                ps.setString(6, t.getUsuario().getId());
             }
 
-            ps.setInt(9, t.getId());
+            ps.setInt(7, t.getId());
 
             if (ps.executeUpdate() == 0) {
-                throw new TareaNoEncontradaException("No existe una tarea con ID " + t.getId());
+                throw new TareaNoEncontradaException(
+                        "No existe una tarea con ID " + t.getId());
             }
 
         } catch (SQLException e) {
@@ -350,5 +347,79 @@ public class TareaDAO {
         LEFT JOIN usuario u ON t.usuario_id = u.id
         
         """;
+    }
+
+    public void actualizarEstado(int id, EstadoTarea estado) {
+        String sql = """
+        UPDATE tarea
+        SET estado = ?
+        WHERE id = ?
+        """;
+
+        try (Connection conn = ConexionSQLite.conectar();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setString(1, estado.name());
+                ps.setInt(2, id);
+
+                if (ps.executeUpdate() == 0) {
+                    throw new TareaNoEncontradaException("No existe una tarea con ID " + id);
+                }
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al actualizar el estado.", e);
+        }
+    }
+
+    public List<Tarea> buscarConFiltros(
+            String titulo,
+            Integer idCategoria,
+            Prioridad prioridad,
+            EstadoTarea estado) {
+
+        StringBuilder sql = new StringBuilder(consultaConJoin());
+        sql.append(" WHERE 1=1 ");
+
+        List<Object> parametros = new ArrayList<>();
+
+        if (titulo != null && !titulo.isBlank()) {
+            sql.append(" AND t.titulo LIKE ? ");
+            parametros.add("%" + titulo.trim() + "%");
+        }
+
+        if (idCategoria != null) {
+            sql.append(" AND t.categoria_id = ? ");
+            parametros.add(idCategoria);
+        }
+
+        if (prioridad != null) {
+            sql.append(" AND t.prioridad = ? ");
+            parametros.add(prioridad.name());
+        }
+
+        if (estado != null) {
+            sql.append(" AND t.estado = ? ");
+            parametros.add(estado.name());
+        }
+
+        try (Connection conn = ConexionSQLite.conectar();
+             PreparedStatement ps = conn.prepareStatement(sql.toString())) {
+
+            for (int i = 0; i < parametros.size(); i++) {
+                ps.setObject(i + 1, parametros.get(i));
+            }
+
+            List<Tarea> tareas = new ArrayList<>();
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    tareas.add(mapear(rs));
+                }
+            }
+
+            return tareas;
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al buscar tareas.", e);
+        }
     }
 }

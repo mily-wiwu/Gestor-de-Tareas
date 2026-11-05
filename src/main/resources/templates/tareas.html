@@ -9,6 +9,83 @@
 
 <h1>Mis tareas</h1>
 
+<style>
+    body {
+        background-color: #e5eeff;
+    }
+
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th, td {
+        padding: 12px 10px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #bcc6d9;
+    }
+
+    td {
+        background-color: whitesmoke;
+    }
+
+    tr {
+        border-bottom: 1px solid #cccccc;
+    }
+</style>
+
+<h2>Buscar tareas</h2>
+<form th:action="@{/gestor-de-tareas/tareas}" method="get">
+    <label>Buscar por título:</label>
+    <input type="text"
+           name="titulo"
+           placeholder="Escribe un título..."
+           th:value="${titulo}">
+    <br><br>
+
+    <label>Categoría:</label>
+    <select name="idCategoria">
+        <option value="">Todas</option>
+        <option th:each="categoria : ${categorias}"
+                th:value="${categoria.id}"
+                th:text="${categoria.nombre}"
+                th:selected="${idCategoria != null and idCategoria == categoria.id}">
+        </option>
+    </select>
+    <br><br>
+
+    <label>Prioridad:</label>
+    <select name="prioridad">
+        <option value="">Todas</option>
+        <option th:each="p : ${T(com.example.Gestor_de_tareas.modelo.Prioridad).values()}"
+                th:value="${p}"
+                th:text="${p}"
+                th:selected="${prioridadSeleccionada == p}">
+        </option>
+    </select>
+    <br><br>
+
+    <label>Estado:</label>
+    <select name="estado">
+        <option value="">Todos</option>
+        <option th:each="e : ${T(com.example.Gestor_de_tareas.modelo.EstadoTarea).values()}"
+                th:value="${e}"
+                th:text="${#strings.replace(e.name(), '_', ' ')}"
+                th:selected="${estadoSeleccionado == e}">
+        </option>
+    </select>
+    <br><br>
+
+    <button type="submit">Buscar</button>
+
+    <a th:href="@{/gestor-de-tareas/tareas}">Limpiar filtros</a>
+
+</form>
+<hr>
+
 <p th:if="${#lists.isEmpty(tareas)}">
     No hay tareas registradas.
 </p>
@@ -22,6 +99,7 @@
         <th>Estado</th>
         <th>Prioridad</th>
         <th>Fecha límite</th>
+        <th>Acciones</th>
     </tr>
     </thead>
 
@@ -30,10 +108,37 @@
         <td th:text="${tarea.id}"></td>
         <td th:text="${tarea.titulo}"></td>
         <td th:text="${tarea.descripcion}"></td>
-        <td th:text="${tarea.estado}"></td>
+        <td th:text="${#strings.replace(tarea.estado.name(), '_', ' ')}"></td>
         <td th:text="${tarea.prioridad}"></td>
         <td th:text="${tarea.fechaLimite}"></td>
+
         <td>
+            <form th:action="@{/gestor-de-tareas/tareas/estado}" method="post">
+                <input type="hidden" name="id" th:value="${tarea.id}">
+                <select name="estado">
+                    <option th:each="e : ${T(com.example.Gestor_de_tareas.modelo.EstadoTarea).values()}"
+                            th:value="${e}"
+                            th:text="${#strings.replace(e.name(), '_', ' ')}"
+                            th:selected="${e == tarea.estado}">
+                    </option>
+                </select>
+                <button type="submit">Cambiar estado</button>
+            </form>
+            <form th:action="@{/gestor-de-tareas/tareas/usuario}" method="post">
+                <input type="hidden" name="id" th:value="${tarea.id}">
+                <select name="usuarioId">
+                    <option value="">Sin asignar</option>
+                    <option th:each="usuario : ${usuarios}"
+                            th:value="${usuario.id}"
+                            th:text="   ${usuario.nombre}"
+                            th:selected="${tarea.usuario != null and usuario.id == tarea.usuario.id}">
+                    </option>
+                </select>
+                <button type="submit">Asignar usuario</button>
+            </form>
+            <form th:action="@{/gestor-de-tareas/tareas/editar/{id}(id=${tarea.id})}" method="get">
+                <button type="submit">Editar</button>
+            </form>
             <form th:action="@{/gestor-de-tareas/tareas/eliminar}" method="post">
                 <input type="hidden" name="id" th:value="${tarea.id}">
                 <button type="submit">Eliminar</button>
@@ -42,9 +147,10 @@
     </tr>
     </tbody>
 </table>
-
+<br>
 <a th:href="@{/gestor-de-tareas/tareas/nueva}">Crear tarea</a>
 <br>
 <a th:href="@{/gestor-de-tareas}">Volver al inicio</a>
+
 </body>
 </html>

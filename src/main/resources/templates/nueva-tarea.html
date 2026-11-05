@@ -9,6 +9,12 @@
 
 <h1>Crear una tarea</h1>
 
+<style>
+    body {
+        background-color: #e5eeff;
+    }
+</style>
+
 <form th:action="@{/gestor-de-tareas/tareas/nueva}" method="post">
     <label for="titulo">Título:</label>
     <br>
@@ -48,6 +54,17 @@
         <option value="ALTA">Alta</option>
         <option value="MEDIA">Media</option>
         <option value="BAJA">Baja</option>
+    </select>
+
+    <br><br>
+
+    <label>Usuario asignado:</label>
+    <select id="usuarioId" name="usuarioId">
+        <option value="">Sin asignar</option>
+        <option th:each="usuario : ${usuarios}"
+                th:value="${usuario.id}"
+                th:text="${usuario.nombre}">
+        </option>
     </select>
 
     <br><br>

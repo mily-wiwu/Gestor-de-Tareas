@@ -33,17 +33,9 @@ public class TareaService {
         return tareaDAO.listar();
     }
 
-    public void asignarTarea(String idUsuario, int idTarea) {
-        Usuario usuario = usuarioService.buscarUsuario(idUsuario);
-
-        Tarea tarea = tareaDAO.buscarPorId(idTarea)
-                    .orElseThrow(() ->
-                        new TareaNoEncontradaException(
-                                "No existe la tarea con ID " + idTarea
-                        ));
-
+    public void asignarUsuario(int id, Usuario usuario) {
+        Tarea tarea = buscarTarea(id);
         tarea.setUsuario(usuario);
-
         tareaDAO.actualizar(tarea);
     }
 
@@ -203,4 +195,11 @@ public class TareaService {
         return tareaDAO.buscarPorUsuario(idUsuario);
     }
 
+    public void cambiarEstado(int id, EstadoTarea estado) {
+        tareaDAO.actualizarEstado(id, estado);
+    }
+
+    public List<Tarea> buscarTareas(String titulo, Integer idCategoria, Prioridad prioridad, EstadoTarea estado) {
+        return tareaDAO.buscarConFiltros(titulo, idCategoria, prioridad, estado);
+    }
 }

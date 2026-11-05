@@ -9,6 +9,34 @@
 
 <h1>Mis categorias</h1>
 
+<style>
+    body {
+        background-color: #e5eeff;
+    }
+
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th, td {
+        padding: 12px 10px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #bcc6d9;
+    }
+
+    td {
+        background-color: whitesmoke;
+    }
+
+    tr {
+        border-bottom: 1px solid #cccccc;
+    }
+</style>
+
 <p th:if="${#lists.isEmpty(categorias)}">
     No hay categorías registradas.
 </p>

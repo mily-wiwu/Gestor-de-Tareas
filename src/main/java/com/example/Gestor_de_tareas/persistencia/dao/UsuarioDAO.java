@@ -31,28 +31,20 @@ public class UsuarioDAO {
     }
 
     public Optional<Usuario> buscarPorId(String id) {
-
         String sql = "SELECT * FROM usuario WHERE id = ?";
 
         try (Connection conn = ConexionSQLite.conectar();
              PreparedStatement ps = conn.prepareStatement(sql)) {
-
             ps.setString(1, id);
-
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                Usuario u = new Usuario(
-                        rs.getString("id"),
-                        rs.getString("nombre")
-                );
+                Usuario u = new Usuario(rs.getString("id"), rs.getString("nombre"));
                 return Optional.of(u);
             }
-
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-
         return Optional.empty();
     }
 
