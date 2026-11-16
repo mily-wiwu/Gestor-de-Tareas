@@ -11,7 +11,43 @@
 
 <style>
     body {
-        background-color: #e5eeff;
+        background-color: #f6c8cf;
+    }
+
+    h1 {
+        background-color: #ffffff;
+        color: #000000;
+        padding: 5px 15px;
+        margin: 0;
+    }
+
+    .descripcion {
+        max-width: 220px;
+        padding: 12px;
+        vertical-align: middle;
+    }
+
+    .texto-descripcion {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        overflow: hidden;
+        overflow-wrap: anywhere;
+    }
+
+    .texto-descripcion.expandido {
+        display: block;
+        overflow: visible;
+    }
+
+    .boton-descripcion {
+        background: none;
+        border: none;
+        color: #c55160;
+        cursor: pointer;
+        padding: 4px 0;
+        font-size: 13px;
+        font-weight: bold;
     }
 
     table {
@@ -25,7 +61,8 @@
     }
 
     th {
-        background-color: #bcc6d9;
+        background-color: #c55160;
+        color: #ecd4d4;
     }
 
     td {
@@ -34,6 +71,49 @@
 
     tr {
         border-bottom: 1px solid #cccccc;
+    }
+
+    .boton {
+        display: inline-block;
+        background-color: #c55160;
+        color: white;
+        text-decoration: none;
+        padding: 10px 18px;
+        border-radius: 8px;
+        margin: 5px;
+        border: none;
+        font-size: 16px;
+    }
+
+    .boton:hover {
+        background-color: #a83e4d;
+    }
+
+    .boton-pequeno {
+        padding: 5px 10px;
+        font-size: 15px;
+    }
+
+    input {
+        background-color: white;
+        border: 1px solid #c55160;
+        border-radius: 8px;
+        padding: 10px;
+        font-size: 15px;
+        outline: none;
+    }
+
+    select {
+        background-color: white;
+        border: 1px solid #c55160;
+        border-radius: 8px;
+        padding: 10px;
+        font-size: 15px;
+        cursor: pointer;
+    }
+
+    label {
+        font-size: 20px;
     }
 </style>
 
@@ -79,9 +159,9 @@
     </select>
     <br><br>
 
-    <button type="submit">Buscar</button>
+    <button type="submit" class="boton">Buscar</button>
 
-    <a th:href="@{/gestor-de-tareas/tareas}">Limpiar filtros</a>
+    <a class="boton" th:href="@{/gestor-de-tareas/tareas}">Limpiar filtros</a>
 
 </form>
 <hr>
@@ -107,7 +187,14 @@
     <tr th:each="tarea : ${tareas}">
         <td th:text="${tarea.id}"></td>
         <td th:text="${tarea.titulo}"></td>
-        <td th:text="${tarea.descripcion}"></td>
+        <td class="descripcion">
+            <div class="texto-descripcion"
+                 th:text="${tarea.descripcion}">
+            </div>
+            <button type="button" class="boton-descripcion" onclick="mostrarDescripcion(this)">
+                Ver más
+            </button>
+        </td>
         <td th:text="${#strings.replace(tarea.estado.name(), '_', ' ')}"></td>
         <td th:text="${tarea.prioridad}"></td>
         <td th:text="${tarea.fechaLimite}"></td>
@@ -122,7 +209,7 @@
                             th:selected="${e == tarea.estado}">
                     </option>
                 </select>
-                <button type="submit">Cambiar estado</button>
+                <button type="submit" class="boton boton-pequeno">Cambiar estado</button>
             </form>
             <form th:action="@{/gestor-de-tareas/tareas/usuario}" method="post">
                 <input type="hidden" name="id" th:value="${tarea.id}">
@@ -134,23 +221,52 @@
                             th:selected="${tarea.usuario != null and usuario.id == tarea.usuario.id}">
                     </option>
                 </select>
-                <button type="submit">Asignar usuario</button>
+                <button type="submit" class="boton boton-pequeno">Asignar usuario</button>
             </form>
             <form th:action="@{/gestor-de-tareas/tareas/editar/{id}(id=${tarea.id})}" method="get">
-                <button type="submit">Editar</button>
+                <button type="submit" class="boton boton-pequeno">Editar</button>
             </form>
             <form th:action="@{/gestor-de-tareas/tareas/eliminar}" method="post">
                 <input type="hidden" name="id" th:value="${tarea.id}">
-                <button type="submit">Eliminar</button>
+                <button type="submit" class="boton boton-pequeno">Eliminar</button>
             </form>
         </td>
     </tr>
     </tbody>
 </table>
 <br>
-<a th:href="@{/gestor-de-tareas/tareas/nueva}">Crear tarea</a>
-<br>
-<a th:href="@{/gestor-de-tareas}">Volver al inicio</a>
+<a class="boton" th:href="@{/gestor-de-tareas/tareas/nueva}">Crear tarea</a>
+<a class="boton" th:href="@{/gestor-de-tareas}">Volver al inicio</a>
 
+<script>
+    function mostrarDescripcion(boton) {
+        const texto = boton.previousElementSibling;
+
+        texto.classList.toggle("expandido");
+
+        if (texto.classList.contains("expandido")) {
+            boton.textContent = "Ver menos";
+        } else {
+            boton.textContent = "Ver más";
+        }
+    }
+</script>
+
+<script>
+    function comprobarDescripciones() {
+        document.querySelectorAll(".texto-descripcion").forEach(texto => {
+
+            const boton = texto.nextElementSibling;
+
+            if (texto.scrollHeight > texto.clientHeight) {
+                boton.style.display = "inline-block";
+            } else {
+                boton.style.display = "none";
+            }
+        });
+    }
+
+    window.addEventListener("load", comprobarDescripciones);
+</script>
 </body>
 </html>

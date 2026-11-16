@@ -8,11 +8,61 @@
 <body>
 
 <h1>Crear un usuario</h1>
+<br>
 
 <style>
     body {
-        background-color: #e5eeff;
+        background-color: #f6c8cf;
     }
+
+    input {
+        background-color: white;
+        border: 1px solid #c55160;
+        border-radius: 8px;
+        padding: 10px;
+        font-size: 15px;
+        outline: none;
+    }
+
+    textarea {
+        background-color: white;
+        border: 1px solid #c55160;
+        border-radius: 8px;
+        padding: 10px;
+        font-size: 15px;
+        width: 300px;
+        height: 50px;
+        resize: vertical;
+        box-sizing: border-box;
+    }
+
+    label {
+        font-size: 20px;
+    }
+
+    h1 {
+        background-color: #ffffff;
+        color: #000000;
+        padding: 5px 15px;
+        margin: 0;
+    }
+
+    .boton {
+        display: inline-block;
+        background-color: #c55160;
+        color: white;
+        text-decoration: none;
+        padding: 10px 18px;
+        border-radius: 8px;
+        margin: 5px;
+        border: none;
+        font-size: 16px;
+    }
+
+    .boton:hover {
+        background-color: #a83e4d;
+    }
+
 </style>
 
 <form th:action="@{/gestor-de-tareas/usuarios/nuevo}" method="post">
@@ -28,12 +78,9 @@
 
     <br><br>
 
-    <button type="submit">Crear usuario</button>
+    <button type="submit" class="boton">Crear usuario</button>
+    <a class="boton" th:href="@{/gestor-de-tareas/usuarios}">Volver a mis usuarios</a>
 </form>
-
-<br><br>
-
-<a th:href="@{/gestor-de-tareas/usuarios}">Volver a mis usuarios</a>
 
 </body>
 </html>

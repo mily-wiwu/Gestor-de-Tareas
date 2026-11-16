@@ -8,11 +8,61 @@
 <body>
 
 <h1>Crear una categoria</h1>
+<br>
 
 <style>
     body {
-        background-color: #e5eeff;
+        background-color: #f6c8cf;
     }
+
+    h1 {
+        background-color: #ffffff;
+        color: #000000;
+        padding: 5px 15px;
+        margin: 0;
+    }
+
+    label {
+        font-size: 20px;
+    }
+
+    input {
+        background-color: white;
+        border: 1px solid #c55160;
+        border-radius: 8px;
+        padding: 10px;
+        font-size: 15px;
+        outline: none;
+    }
+
+    textarea {
+        background-color: white;
+        border: 1px solid #c55160;
+        border-radius: 8px;
+        padding: 10px;
+        font-size: 15px;
+        width: 300px;
+        height: 100px;
+        resize: vertical;
+        box-sizing: border-box;
+    }
+
+    .boton {
+        display: inline-block;
+        background-color: #c55160;
+        color: white;
+        text-decoration: none;
+        padding: 10px 18px;
+        border-radius: 8px;
+        margin: 5px;
+        border: none;
+        font-size: 16px;
+    }
+
+    .boton:hover {
+        background-color: #a83e4d;
+    }
+
 </style>
 
 <form th:action="@{/gestor-de-tareas/categorias/nueva}" method="post">
@@ -28,12 +78,9 @@
 
     <br><br>
 
-    <button type="submit">Crear categoria</button>
+    <button type="submit" class="boton">Crear categoria</button>
+    <a class="boton" th:href="@{/gestor-de-tareas/categorias}">Volver a mis categorias</a>
 </form>
-
-<br><br>
-
-<a th:href="@{/gestor-de-tareas/categorias}">Volver a mis categorias</a>
 
 </body>
 </html>
