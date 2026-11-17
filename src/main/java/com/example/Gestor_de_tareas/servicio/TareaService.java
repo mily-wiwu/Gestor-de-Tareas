@@ -31,10 +31,6 @@ public class TareaService {
                 new TareaNoEncontradaException("No existe la tarea con ID " + id));
     }
 
-    public List<Tarea> listarTareas() {
-        return tareaDAO.listar();
-    }
-
     public void asignarUsuario(int id, Usuario usuario) {
         Tarea tarea = buscarTarea(id);
         tarea.setUsuario(usuario);
@@ -49,160 +45,12 @@ public class TareaService {
         tareaDAO.actualizar(tarea);
     }
 
-    public List<Tarea> buscarPorPrioridad(Prioridad prioridad) {
-        return tareaDAO.buscarPorPrioridad(prioridad);
-    }
-
-    public List<Tarea> buscarPorEstado(EstadoTarea estado){
-        return tareaDAO.buscarPorEstado(estado);
-    }
-
-    public List<Tarea> obtenerTareasPendientes(){
-        return tareaDAO.buscarPorEstado(EstadoTarea.PENDIENTE);
-    }
-
-    public List<Tarea> obtenerTareasCompletadas(){
-        return tareaDAO.buscarPorEstado(EstadoTarea.COMPLETADA);
-    }
-
-    public List<Tarea> obtenerTareasProximas() {
-        List<Tarea> proximas = new ArrayList<>();
-        for (Tarea tarea : tareaDAO.listar()) {
-            if (tarea.getSituacionTemporal()== SituacionTemporal.PROXIMA_A_VENCER) {
-                proximas.add(tarea);
-            }
-        }
-        return proximas;
-    }
-
-    public List<Tarea> obtenerVenceHoy() {
-        List<Tarea> venceHoy = new ArrayList<>();
-        for (Tarea tarea : tareaDAO.listar()) {
-            if (tarea.getSituacionTemporal()==SituacionTemporal.VENCE_HOY) {
-                venceHoy.add(tarea);
-            }
-        }
-
-        return venceHoy;
-    }
-
-    public List<Tarea> obtenerEnPlazo() {
-        List<Tarea> enPlazo = new ArrayList<>();
-        for (Tarea tarea : tareaDAO.listar()) {
-            if (tarea.getSituacionTemporal()==SituacionTemporal.EN_PLAZO){
-                enPlazo.add(tarea);
-            }
-        }
-        return enPlazo;
-    }
-
-    public List<Tarea> obtenerTareasVencidas() {
-        List<Tarea> vencidas = new ArrayList<>();
-        for (Tarea tarea : tareaDAO.listar()) {
-            if (tarea.getSituacionTemporal()==SituacionTemporal.VENCIDA) {
-                vencidas.add(tarea);
-            }
-        }
-        return vencidas;
-    }
-
-
-    public List<Tarea> obtenerTareasFuturas() {
-        List<Tarea> tareaFutura = new ArrayList<>();
-        for (Tarea tarea : tareaDAO.listar()) {
-            if (tarea.esFutura()) {
-                tareaFutura.add(tarea);
-            }
-        }
-
-        tareaFutura.sort(Comparator.comparing(Tarea::getFechaLimite));
-        return tareaFutura;
-    }
-
-    public List<Tarea> mostrarCategoria(int idCategoria) {
-        return tareaDAO.buscarPorCategoria(idCategoria);
-    }
-
-    public int totalTareas() {
-        return tareaDAO.contadorTareas();
-    }
-
-    public int totalPendientes() {
-        return tareaDAO.contadorEstado(EstadoTarea.PENDIENTE);
-    }
-
-    public int totalProgreso() {
-        return tareaDAO.contadorEstado(EstadoTarea.EN_PROGRESO);
-    }
-
-    public int totalCompletadas() {
-        return tareaDAO.contadorEstado(EstadoTarea.COMPLETADA);
-    }
-
-    public int totalCanceladas() {
-        return tareaDAO.contadorEstado(EstadoTarea.CANCELADA);
-    }
-
-    public int totalVencidas() {
-        List<Tarea> vencidas = new ArrayList<>();
-        for (Tarea tarea : tareaDAO.listar()) {
-            if (tarea.getSituacionTemporal()==SituacionTemporal.VENCIDA) {
-                vencidas.add(tarea);
-            }
-        }
-        return vencidas.size();
-    }
-
-    public int totalProximas() {
-        List<Tarea> proximas = new ArrayList<>();
-        for (Tarea tarea : tareaDAO.listar()) {
-            if (tarea.getSituacionTemporal()==SituacionTemporal.PROXIMA_A_VENCER) {
-                proximas.add(tarea);
-            }
-        }
-        return proximas.size();
-    }
-
-    public int totalHoy() {
-        List<Tarea> hoy = new ArrayList<>();
-        for (Tarea tarea : tareaDAO.listar()) {
-            if (tarea.getSituacionTemporal()==SituacionTemporal.VENCE_HOY){
-                hoy.add(tarea);
-            }
-        }
-        return hoy.size();
-    }
-
-    public int totalAlta() {
-        return tareaDAO.contadorPrioridad(Prioridad.ALTA);
-    }
-
-    public int totalMedia() {
-        return tareaDAO.contadorPrioridad(Prioridad.MEDIA);
-    }
-
-    public int totalBaja() {
-        return tareaDAO.contadorPrioridad(Prioridad.BAJA);
-    }
-
-    public int contadorCategoria(Categoria categoria) {
-        return tareaDAO.contadorCategoria(categoria.getId());
-    }
-
-    public int contadorUsuario(Usuario usuario) {
-        return tareaDAO.contadorUsuario(usuario.getId());
-    }
-
-    public List<Tarea> buscarTareasPorUsuario(int idUsuario) {
-        return tareaDAO.buscarPorUsuario(idUsuario);
-    }
-
     public void cambiarEstado(int id, EstadoTarea estado) {
         tareaDAO.actualizarEstado(id, estado);
     }
 
-    public List<Tarea> buscarTareas(String titulo, Integer idCategoria, Prioridad prioridad, EstadoTarea estado) {
-        return tareaDAO.buscarConFiltros(titulo, idCategoria, prioridad, estado);
+    public List<Tarea> buscarTareas(String titulo, Integer idCategoria, Prioridad prioridad, EstadoTarea estado, String criterioOrden, String direccionOrden) {
+        return tareaDAO.buscarConFiltros(titulo, idCategoria, prioridad, estado, criterioOrden, direccionOrden);
     }
 
     public SituacionTemporal diasRestantes(Tarea tarea, EstadoTarea estadoTarea) {

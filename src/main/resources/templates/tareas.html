@@ -117,51 +117,65 @@
     }
 </style>
 
-<h2>Buscar tareas</h2>
+<h2>Buscar y ordenar tareas</h2>
+
 <form th:action="@{/gestor-de-tareas/tareas}" method="get">
+
     <label>Buscar por título:</label>
     <input type="text"
            name="titulo"
            placeholder="Escribe un título..."
            th:value="${titulo}">
+
     <br><br>
 
-    <label>Categoría:</label>
-    <select name="idCategoria">
-        <option value="">Todas</option>
-        <option th:each="categoria : ${categorias}"
-                th:value="${categoria.id}"
-                th:text="${categoria.nombre}"
-                th:selected="${idCategoria != null and idCategoria == categoria.id}">
+    <label>Ordenar por:</label>
+    <select name="criterioOrden">
+        <option value="titulo" th:selected="${criterioOrden == 'titulo'}">
+            Título
         </option>
-    </select>
-    <br><br>
 
-    <label>Prioridad:</label>
-    <select name="prioridad">
-        <option value="">Todas</option>
-        <option th:each="p : ${T(com.example.Gestor_de_tareas.modelo.Prioridad).values()}"
-                th:value="${p}"
-                th:text="${p}"
-                th:selected="${prioridadSeleccionada == p}">
+        <option value="fecha" th:selected="${criterioOrden == 'fecha'}">
+            Fecha límite
         </option>
-    </select>
-    <br><br>
 
-    <label>Estado:</label>
-    <select name="estado">
-        <option value="">Todos</option>
-        <option th:each="e : ${T(com.example.Gestor_de_tareas.modelo.EstadoTarea).values()}"
-                th:value="${e}"
-                th:text="${#strings.replace(e.name(), '_', ' ')}"
-                th:selected="${estadoSeleccionado == e}">
+        <option value="prioridad" th:selected="${criterioOrden == 'prioridad'}">
+            Prioridad
         </option>
+
+        <option value="categoria" th:selected="${criterioOrden == 'categoria'}">
+            Categoría
+        </option>
+
+        <option value="estado" th:selected="${criterioOrden == 'estado'}">
+            Estado
+        </option>
+
     </select>
+
     <br><br>
 
-    <button type="submit" class="boton">Buscar</button>
+    <label>Dirección:</label>
+    <select name="direccionOrden">
+        <option value="asc" th:selected="${direccionOrden == 'asc'}">
+            Ascendente
+        </option>
 
-    <a class="boton" th:href="@{/gestor-de-tareas/tareas}">Limpiar filtros</a>
+        <option value="desc" th:selected="${direccionOrden == 'desc'}">
+            Descendente
+        </option>
+
+    </select>
+
+    <br><br>
+
+    <button type="submit" class="boton">Buscar y ordenar</button>
+
+    <a class="boton" th:href="@{/gestor-de-tareas/tareas}">
+        Limpiar
+    </a>
+
+</form>
 
 </form>
 <hr>

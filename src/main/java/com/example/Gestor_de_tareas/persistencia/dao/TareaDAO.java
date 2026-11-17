@@ -1,6 +1,5 @@
 package com.example.Gestor_de_tareas.persistencia.dao;
 
-import com.example.Gestor_de_tareas.excepciones.DuplicadoException;
 import com.example.Gestor_de_tareas.excepciones.TareaNoEncontradaException;
 import com.example.Gestor_de_tareas.modelo.*;
 import com.example.Gestor_de_tareas.persistencia.ConexionSQLite;
@@ -370,12 +369,7 @@ public class TareaDAO {
         }
     }
 
-    public List<Tarea> buscarConFiltros(
-            String titulo,
-            Integer idCategoria,
-            Prioridad prioridad,
-            EstadoTarea estado) {
-
+    public List<Tarea> buscarConFiltros(String titulo, Integer idCategoria, Prioridad prioridad, EstadoTarea estado, String criterioOrden, String direccionOrden) {
         StringBuilder sql = new StringBuilder(consultaConJoin());
         sql.append(" WHERE 1=1 ");
 
@@ -401,6 +395,37 @@ public class TareaDAO {
             parametros.add(estado.name());
         }
 
+        String columnaOrden = switch (criterioOrden) {
+            case "titulo" -> "t.titulo COLLATE NOCASE";
+            case "fecha" -> "t.fechaLimite";
+            case "prioridad" -> """
+                CASE t.prioridad
+                    WHEN 'ALTA' THEN 1
+                    WHEN 'MEDIA' THEN 2
+                    WHEN 'BAJA' THEN 3
+                END
+                """;
+            case "categoria" -> "c.nombre COLLATE NOCASE";
+            case "estado" -> """
+                CASE t.estado
+                    WHEN 'PENDIENTE' THEN 1
+                    WHEN 'EN_PROGRESO' THEN 2
+                    WHEN 'COMPLETADA' THEN 3
+                    WHEN 'CANCELADA' THEN 4
+                END
+                """;
+            default -> "t.fechaLimite";
+        };
+
+        String direccion = "desc".equalsIgnoreCase(direccionOrden)
+                ? "DESC" : "ASC";
+
+        sql.append(" ORDER BY ")
+                .append(columnaOrden)
+                .append(" ")
+                .append(direccion)
+                .append(", t.id ASC ");
+
         try (Connection conn = ConexionSQLite.conectar();
              PreparedStatement ps = conn.prepareStatement(sql.toString())) {
 
@@ -421,5 +446,4 @@ public class TareaDAO {
         } catch (SQLException e) {
             throw new RuntimeException("Error al buscar tareas.", e);
         }
-    }
-}
+    }}

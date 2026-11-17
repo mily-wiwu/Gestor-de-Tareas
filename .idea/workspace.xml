@@ -6,16 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="d55a83ce-b721-4788-9a22-e6bc6b067b4f" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/Gestor_de_tareas/controlador/InicioController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/Gestor_de_tareas/controlador/InicioController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/Gestor_de_tareas/controlador/TareaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/Gestor_de_tareas/controlador/TareaController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/Gestor_de_tareas/persistencia/dao/TareaDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/Gestor_de_tareas/persistencia/dao/TareaDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/Gestor_de_tareas/servicio/TareaService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/Gestor_de_tareas/servicio/TareaService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/categorias.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/categorias.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/editar-tarea.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/editar-tarea.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/gestor-de-tareas.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/gestor-de-tareas.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/nueva-categoria.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/nueva-categoria.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/nueva-tarea.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/nueva-tarea.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/nuevo-usuario.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/nuevo-usuario.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/templates/tareas.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/tareas.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/usuarios.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/usuarios.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -96,7 +90,8 @@
       <workItem from="1793820677836" duration="15484000" />
       <workItem from="1794689764843" duration="6395000" />
       <workItem from="1794696814566" duration="1605000" />
-      <workItem from="1794842995593" duration="2990000" />
+      <workItem from="1794842995593" duration="4521000" />
+      <workItem from="1794878592633" duration="1221000" />
     </task>
     <servers />
   </component>
@@ -119,7 +114,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/example/Gestor_de_tareas/controlador/TareaController.java</url>
-          <line>66</line>
+          <line>67</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>
