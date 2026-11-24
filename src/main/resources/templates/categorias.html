@@ -7,7 +7,7 @@
     <link rel="stylesheet" th:href="@{/css/sidebar.css}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
+    <link rel="stylesheet" th:href="@{/css/modal.css}">
     <title>Mis categorías</title>
 </head>
 <body>
@@ -39,9 +39,18 @@
                 <td th:text="${categoria.nombre}"></td>
                 <td th:text="${categoria.descripcion}"></td>
                 <td>
-                    <form th:action="@{/gestor-de-tareas/categorias/eliminar}" method="post">
+                    <form th:action="@{/gestor-de-tareas/categorias/eliminar}"
+                          method="post"
+                          class="formulario-confirmacion"
+                          data-titulo="¿Eliminar esta categoria?"
+                          data-mensaje="Esta acción eliminará permanentemente la categoria. ¿Estás segura de que deseas continuar?"
+                          data-boton="Eliminar">
+
                         <input type="hidden" name="id" th:value="${categoria.id}">
-                        <button type="submit" class="boton boton-pequeno">Eliminar</button>
+
+                        <button type="submit" class="boton boton-pequeno">
+                            Eliminar
+                        </button>
                     </form>
                 </td>
             </tr>
@@ -57,5 +66,7 @@
 
 </div>
 <script th:src="@{/js/sidebar.js}"></script>
+<div th:replace="~{fragments/modal-confirmacion :: modalConfirmacion}"></div>
+<script th:src="@{/js/modal.js}"></script>
 </body>
 </html>

@@ -6,43 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="d55a83ce-b721-4788-9a22-e6bc6b067b4f" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/Gestor_de_tareas/controlador/TareaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/Gestor_de_tareas/controlador/TareaController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/Gestor_de_tareas/persistencia/dao/TareaDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/Gestor_de_tareas/persistencia/dao/TareaDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/Gestor_de_tareas/servicio/TareaService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/Gestor_de_tareas/servicio/TareaService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/templates/categorias.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/categorias.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/editar-tarea.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/editar-tarea.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/gestor-de-tareas.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/gestor-de-tareas.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/nueva-categoria.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/nueva-categoria.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/nueva-tarea.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/nueva-tarea.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/nuevo-usuario.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/nuevo-usuario.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/fragments/sidebar.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/fragments/sidebar.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/templates/tareas.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/tareas.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/templates/usuarios.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/usuarios.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/excepciones/CategoriaNoEncontradaException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/excepciones/DuplicadoException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/excepciones/TareaInvalidaException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/excepciones/TareaNoEncontradaException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/excepciones/UsuarioNoEncontradoException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/gestor/GestorTareas.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/main/Main.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/menus/MenuCategoria.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/menus/MenuConsultas.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/menus/MenuDatos.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/menus/MenuExportacion.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/menus/MenuReporte.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/menus/MenuTarea.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/menus/MenuUsuarios.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/modelo/Categoria.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/modelo/EstadoTarea.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/modelo/Prioridad.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/modelo/SituacionTemporal.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/modelo/Tarea.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/modelo/Usuario.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/persistencia/CategoriaDAO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/persistencia/ConexionSQLite.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/persistencia/InitDB.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/persistencia/TareaDAO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/persistencia/UsuarioDAO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/util/Colores.class" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -132,7 +99,7 @@
       <workItem from="1794842995593" duration="4521000" />
       <workItem from="1794878592633" duration="12255000" />
       <workItem from="1795137802395" duration="749000" />
-      <workItem from="1795535945449" duration="2213000" />
+      <workItem from="1795535945449" duration="5892000" />
     </task>
     <servers />
   </component>

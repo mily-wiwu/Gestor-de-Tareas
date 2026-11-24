@@ -27,13 +27,13 @@
     <nav class="navegacion">
 
         <a th:href="@{/gestor-de-tareas}" class="enlace-nav">
-            <span>⌂</span>
+            <img th:src="@{/img/iconos/inicio.png}" alt="Inicio" class="icono-sidebar">
             <span class="texto-nav">Inicio</span>
         </a>
 
         <div class="grupo-nav">
             <a th:href="@{/gestor-de-tareas/tareas}" class="enlace-nav">
-                <span>▤</span>
+                <img th:src="@{/img/iconos/tareas.png}" alt="Tareas" class="icono-sidebar">
                 <span class="texto-nav">Tareas</span>
             </a>
 
@@ -50,8 +50,7 @@
 
         <div class="grupo-nav">
             <a th:href="@{/gestor-de-tareas/categorias}" class="enlace-nav">
-                <span>▣</span>
-                <span class="texto-nav">Categorías</span>
+                <img th:src="@{/img/iconos/categorias.png}" alt="Categorias" class="icono-sidebar">                <span class="texto-nav">Categorías</span>
             </a>
 
             <div class="subnav">
@@ -67,7 +66,7 @@
 
         <div class="grupo-nav">
             <a th:href="@{/gestor-de-tareas/usuarios}" class="enlace-nav">
-                <span>♙</span>
+                <img th:src="@{/img/iconos/usuarios.png}" alt="Usuarios" class="icono-sidebar">
                 <span class="texto-nav">Usuarios</span>
             </a>
 

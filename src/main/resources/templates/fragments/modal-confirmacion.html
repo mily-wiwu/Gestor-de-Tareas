@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+        <title>Title</title>
+</head>
+<body>
+
+<div th:fragment="modalConfirmacion"
+     id="modalConfirmacion"
+     class="modal-overlay">
+
+    <div class="modal-contenido">
+
+        <div class="modal-icono">!</div>
+
+        <h2 id="modalTitulo">Confirmar acción</h2>
+
+        <p id="modalMensaje">
+            ¿Estás segura de que deseas continuar?
+        </p>
+
+        <div class="modal-botones">
+
+            <button type="button"
+                    id="botonCancelar"
+                    class="boton-cancelar">
+                Cancelar
+            </button>
+
+            <button type="button"
+                    id="botonConfirmar"
+                    class="boton-confirmar">
+                Confirmar
+            </button>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

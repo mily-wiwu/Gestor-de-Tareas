@@ -7,7 +7,7 @@
     <link rel="stylesheet" th:href="@{/css/sidebar.css}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
+    <link rel="stylesheet" th:href="@{/css/modal.css}">
     <title>Mis usuarios</title>
 </head>
 <body>
@@ -37,9 +37,19 @@
                 <td th:text="${usuario.id}"></td>
                 <td th:text="${usuario.nombre}"></td>
                 <td>
-                    <form th:action="@{/gestor-de-tareas/usuarios/eliminar}" method="post">
+
+                    <form th:action="@{/gestor-de-tareas/usuarios/eliminar}"
+                          method="post"
+                          class="formulario-confirmacion"
+                          data-titulo="¿Eliminar este usuario?"
+                          data-mensaje="Esta acción eliminará permanentemente el usuario. ¿Estás segura de que deseas continuar?"
+                          data-boton="Eliminar">
+
                         <input type="hidden" name="id" th:value="${usuario.id}">
-                        <button type="submit" class="boton boton-pequeno">Eliminar</button>
+
+                        <button type="submit" class="boton boton-pequeno">
+                            Eliminar
+                        </button>
                     </form>
                 </td>
             </tr>
@@ -53,5 +63,7 @@
 
 </div>
 <script th:src="@{/js/sidebar.js}"></script>
+<div th:replace="~{fragments/modal-confirmacion :: modalConfirmacion}"></div>
+<script th:src="@{/js/modal.js}"></script>
 </body>
 </html>
