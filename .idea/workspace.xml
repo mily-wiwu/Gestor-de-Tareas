@@ -67,6 +67,11 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="G:\Mi unidad\Universidad\2026-1\POO\Gestor-de-tareas\src\main\resources\static\img\iconos" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="GestorDeTareasApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />

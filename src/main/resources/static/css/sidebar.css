@@ -108,7 +108,6 @@
     color: #f6c8cf;
 }
 
-/* Cabecera de la sidebar */
 .cabecera-sidebar {
     display: flex;
     align-items: center;
@@ -116,7 +115,6 @@
     gap: 5px;
 }
 
-/* Botón para minimizar */
 .boton-sidebar {
     background: none;
     border: none;
@@ -142,9 +140,12 @@
     display: none;
 }
 
+.barra-lateral.minimizada .texto-nav {
+    display: none;
+}
+
 .barra-lateral.minimizada .enlace-nav {
     justify-content: center;
-    padding: 12px 5px;
 }
 
 .barra-lateral.minimizada .cabecera-sidebar {
