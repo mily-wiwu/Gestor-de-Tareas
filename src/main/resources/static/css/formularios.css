@@ -1,0 +1,33 @@
+label {
+    font-size: 20px;
+}
+
+input {
+    background-color: white;
+    border: 1px solid #c55160;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 15px;
+    outline: none;
+}
+
+select {
+    background-color: white;
+    border: 1px solid #c55160;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+textarea {
+    background-color: white;
+    border: 1px solid #c55160;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 15px;
+    width: 300px;
+    height: 100px;
+    resize: vertical;
+    box-sizing: border-box;
+}

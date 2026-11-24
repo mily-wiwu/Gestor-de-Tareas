@@ -369,8 +369,8 @@ public class TareaDAO {
         }
     }
 
-    public List<Tarea> buscarConFiltros(String titulo, Integer idCategoria, Prioridad prioridad, EstadoTarea estado, String criterioOrden, String direccionOrden) {
-        StringBuilder sql = new StringBuilder(consultaConJoin());
+    public List<Tarea> buscarConFiltros(String titulo, String criterioFiltro, String valorFiltro, String criterioOrden, String direccionOrden) {        StringBuilder sql = new StringBuilder(consultaConJoin());
+        sql = new StringBuilder(consultaConJoin());
         sql.append(" WHERE 1=1 ");
 
         List<Object> parametros = new ArrayList<>();
@@ -380,22 +380,27 @@ public class TareaDAO {
             parametros.add("%" + titulo.trim() + "%");
         }
 
-        if (idCategoria != null) {
-            sql.append(" AND t.categoria_id = ? ");
-            parametros.add(idCategoria);
-        }
+        if (criterioFiltro != null && valorFiltro != null && !valorFiltro.isBlank()) {
+            switch (criterioFiltro) {
+                case "categoria" -> {
+                    sql.append(" AND t.categoria_id = ? ");
+                    parametros.add(Integer.parseInt(valorFiltro));
+                }
 
-        if (prioridad != null) {
-            sql.append(" AND t.prioridad = ? ");
-            parametros.add(prioridad.name());
-        }
+                case "prioridad" -> {
+                    sql.append(" AND t.prioridad = ? ");
+                    parametros.add(valorFiltro);
+                }
 
-        if (estado != null) {
-            sql.append(" AND t.estado = ? ");
-            parametros.add(estado.name());
+                case "estado" -> {
+                    sql.append(" AND t.estado = ? ");
+                    parametros.add(valorFiltro);
+                }
+            }
         }
 
         String columnaOrden = switch (criterioOrden) {
+            case "id" -> "t.id";
             case "titulo" -> "t.titulo COLLATE NOCASE";
             case "fecha" -> "t.fechaLimite";
             case "prioridad" -> """
@@ -414,7 +419,7 @@ public class TareaDAO {
                     WHEN 'CANCELADA' THEN 4
                 END
                 """;
-            default -> "t.fechaLimite";
+            default -> "t.id";
         };
 
         String direccion = "desc".equalsIgnoreCase(direccionOrden)

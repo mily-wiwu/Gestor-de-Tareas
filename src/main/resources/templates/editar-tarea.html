@@ -2,83 +2,67 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/global.css}">
+    <link rel="stylesheet" th:href="@{/css/formularios.css}">
+    <link rel="stylesheet" th:href="@{/css/sidebar.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
     <title>Editar tarea</title>
 </head>
 <body>
-
 <h1>Editar tarea</h1>
+<div class="layout">
 
-<style>
-    body {
-        background-color: #f6c8cf;
-    }
+    <div th:replace="~{fragments/sidebar :: sidebar}"></div>
 
-    h1 {
-        background-color: #ffffff;
-        color: #000000;
-        padding: 5px 15px;
-        margin: 0;
-    }
+    <main class="contenido-principal">
 
-    .boton {
-        display: inline-block;
-        background-color: #c55160;
-        color: white;
-        text-decoration: none;
-        padding: 10px 18px;
-        border-radius: 8px;
-        margin: 5px;
-        border: none;
-        font-size: 16px;
-    }
+        <form th:action="@{/gestor-de-tareas/tareas/editar}" th:object="${tarea}" method="post">
 
-    .boton:hover {
-        background-color: #a83e4d;
-    }
+            <input type="hidden" th:field="*{id}">
+
+            <label>Título:</label>
+            <br>
+            <input type="text" th:field="*{titulo}" required>
+            <br><br>
+            <label>Descripción:</label>
+            <br>
+            <textarea th:field="*{descripcion}"></textarea>
+            <br><br>
+            <label>Fecha límite:</label>
+            <br>
+            <input type="date" th:field="*{fechaLimite}" required>
+            <br><br>
+            <label>Prioridad:</label>
+            <br>
+            <select th:field="*{prioridad}">
+                <option th:each="p : ${T(com.example.Gestor_de_tareas.modelo.Prioridad).values()}"
+                        th:value="${p}"
+                        th:text="${p}">
+                </option>
+            </select>
+            <br><br>
+            <label>Categoría:</label>
+            <br>
+            <select name="idCategoria" required>
+                <option th:each="categoria : ${categorias}"
+                        th:value="${categoria.id}"
+                        th:text="${categoria.nombre}"
+                        th:selected="${categoria.id == tarea.categoria.id}">
+                </option>
+            </select>
+            <br><br>
+            <button type="submit" class="boton">Guardar cambios</button>
+
+        </form>
+
+        <a class="boton" th:href="@{/gestor-de-tareas/tareas}">Cancelar</a>
 
 
-</style>
+    </main>
 
-<form th:action="@{/gestor-de-tareas/tareas/editar}" th:object="${tarea}" method="post">
-
-    <input type="hidden" th:field="*{id}">
-
-    <label>Título:</label>
-    <br>
-    <input type="text" th:field="*{titulo}" required>
-    <br><br>
-    <label>Descripción:</label>
-    <br>
-    <textarea th:field="*{descripcion}"></textarea>
-    <br><br>
-    <label>Fecha límite:</label>
-    <br>
-    <input type="date" th:field="*{fechaLimite}" required>
-    <br><br>
-    <label>Prioridad:</label>
-    <br>
-    <select th:field="*{prioridad}">
-        <option th:each="p : ${T(com.example.Gestor_de_tareas.modelo.Prioridad).values()}"
-                th:value="${p}"
-                th:text="${p}">
-        </option>
-    </select>
-    <br><br>
-    <label>Categoría:</label>
-    <br>
-    <select name="idCategoria" required>
-        <option th:each="categoria : ${categorias}"
-                th:value="${categoria.id}"
-                th:text="${categoria.nombre}"
-                th:selected="${categoria.id == tarea.categoria.id}">
-        </option>
-    </select>
-    <br><br>
-    <button type="submit" class="boton">Guardar cambios</button>
-
-</form>
-
-<a class="boton" th:href="@{/gestor-de-tareas/tareas}">Cancelar</a>
-
+</div>
+<script th:src="@{/js/sidebar.js}"></script>
 </body>
 </html>

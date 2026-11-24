@@ -1,0 +1,27 @@
+.estadisticas {
+    display: grid;
+    grid-template-columns: repeat(4, 200px);
+    gap: 20px;
+    margin: 12px 0;
+}
+
+.tarjeta {
+    background-color: #c55160;
+    width: 200px;
+    height: 100px;
+    padding: 5px;
+    border-radius: 7px;
+    text-align: center;
+}
+
+.tarjeta h3 {
+    margin-bottom: 4px;
+    color: #f6c8cf;
+}
+
+.tarjeta p {
+    margin-top: 0;
+    color: #f6c8cf;
+    font-size: 23px;
+    font-weight: bold;
+}

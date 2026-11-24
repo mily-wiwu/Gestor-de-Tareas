@@ -3,135 +3,86 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/global.css}">
+    <link rel="stylesheet" th:href="@{/css/formularios.css}">
+    <link rel="stylesheet" th:href="@{/css/sidebar.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
     <title>Nueva tarea</title>
 </head>
 <body>
-
 <h1>Crear una tarea</h1>
-<br>
 
-<style>
-    body {
-        background-color: #f6c8cf;
-    }
+<div class="layout">
 
-    input {
-        background-color: white;
-        border: 1px solid #c55160;
-        border-radius: 8px;
-        padding: 10px;
-        font-size: 15px;
-        outline: none;
-    }
+    <div th:replace="~{fragments/sidebar :: sidebar}"></div>
 
-    textarea {
-        background-color: white;
-        border: 1px solid #c55160;
-        border-radius: 8px;
-        padding: 10px;
-        font-size: 15px;
-        width: 300px;
-        height: 100px;
-        resize: vertical;
-        box-sizing: border-box;
-    }
+    <main class="contenido-principal">
 
-    select {
-        background-color: white;
-        border: 1px solid #c55160;
-        border-radius: 8px;
-        padding: 10px;
-        font-size: 15px;
-        cursor: pointer;
-    }
+        <form th:action="@{/gestor-de-tareas/tareas/nueva}" method="post">
+            <label for="titulo">Título:</label>
+            <br>
+            <input type="text" id="titulo" name="titulo" required>
 
-    label {
-        font-size: 20px;
-    }
+            <br><br>
 
-    h1 {
-        background-color: #ffffff;
-        color: #000000;
-        padding: 5px 15px;
-        margin: 0;
-    }
+            <label for="descripcion">Descripción:</label>
+            <br>
+            <textarea id="descripcion" name="descripcion"></textarea>
 
-    .boton {
-        display: inline-block;
-        background-color: #c55160;
-        color: white;
-        text-decoration: none;
-        padding: 10px 18px;
-        border-radius: 8px;
-        margin: 5px;
-        border: none;
-        font-size: 16px;
-    }
+            <br><br>
 
-    .boton:hover {
-        background-color: #a83e4d;
-    }
+            <label for="categoria">Categoría:</label>
+            <br>
+            <select id="categoria" name="idCategoria" required>
+                <option value="">Selecciona una categoría</option>
 
-</style>
+                <option th:each="categoria : ${categorias}"
+                        th:value="${categoria.id}"
+                        th:text="${categoria.nombre}">
+                </option>
+            </select>
 
-<form th:action="@{/gestor-de-tareas/tareas/nueva}" method="post">
-    <label for="titulo">Título:</label>
-    <br>
-    <input type="text" id="titulo" name="titulo" required>
+            <br><br>
 
-    <br><br>
+            <label for="fechaLimite">Fecha límite:</label>
+            <br>
+            <input type="date" id="fechaLimite" name="fechaLimite" required>
 
-    <label for="descripcion">Descripción:</label>
-    <br>
-    <textarea id="descripcion" name="descripcion"></textarea>
+            <br><br>
 
-    <br><br>
+            <label for="prioridad">Prioridad:</label>
+            <br>
+            <select id="prioridad" name="prioridad" required>
+                <option value="">Selecciona una prioridad</option>
+                <option value="ALTA">Alta</option>
+                <option value="MEDIA">Media</option>
+                <option value="BAJA">Baja</option>
+            </select>
 
-    <label for="categoria">Categoría:</label>
-    <br>
-    <select id="categoria" name="idCategoria" required>
-        <option value="">Selecciona una categoría</option>
+            <br><br>
 
-        <option th:each="categoria : ${categorias}"
-                th:value="${categoria.id}"
-                th:text="${categoria.nombre}">
-        </option>
-    </select>
+            <label>Usuario asignado:</label>
+            <br>
+            <select id="usuarioId" name="usuarioId">
+                <option value="">Sin asignar</option>
+                <option th:each="usuario : ${usuarios}"
+                        th:value="${usuario.id}"
+                        th:text="${usuario.nombre}">
+                </option>
+            </select>
 
-    <br><br>
+            <br><br>
 
-    <label for="fechaLimite">Fecha límite:</label>
-    <br>
-    <input type="date" id="fechaLimite" name="fechaLimite" required>
+            <button type="submit" class="boton">Crear tarea</button>
+            <a class="boton" th:href="@{/gestor-de-tareas/tareas}">Volver a mis tareas</a>
+        </form>
 
-    <br><br>
 
-    <label for="prioridad">Prioridad:</label>
-    <br>
-    <select id="prioridad" name="prioridad" required>
-        <option value="">Selecciona una prioridad</option>
-        <option value="ALTA">Alta</option>
-        <option value="MEDIA">Media</option>
-        <option value="BAJA">Baja</option>
-    </select>
+    </main>
 
-    <br><br>
-
-    <label>Usuario asignado:</label>
-    <br>
-    <select id="usuarioId" name="usuarioId">
-        <option value="">Sin asignar</option>
-        <option th:each="usuario : ${usuarios}"
-                th:value="${usuario.id}"
-                th:text="${usuario.nombre}">
-        </option>
-    </select>
-
-    <br><br>
-
-    <button type="submit" class="boton">Crear tarea</button>
-    <a class="boton" th:href="@{/gestor-de-tareas/tareas}">Volver a mis tareas</a>
-</form>
-
+</div>
+<script th:src="@{/js/sidebar.js}"></script>
 </body>
 </html>

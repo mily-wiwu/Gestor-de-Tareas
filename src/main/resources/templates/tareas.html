@@ -3,284 +3,234 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/global.css}">
+    <link rel="stylesheet" th:href="@{/css/tareas.css}">
+    <link rel="stylesheet" th:href="@{/css/sidebar.css}">
+    <link rel="stylesheet" th:href="@{/css/formularios.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
     <title>Mis tareas</title>
 </head>
 <body>
-
 <h1>Mis tareas</h1>
 
-<style>
-    body {
-        background-color: #f6c8cf;
-    }
+<div class="layout">
 
-    h1 {
-        background-color: #ffffff;
-        color: #000000;
-        padding: 5px 15px;
-        margin: 0;
-    }
+    <div th:replace="~{fragments/sidebar :: sidebar}"></div>
 
-    .descripcion {
-        max-width: 220px;
-        padding: 12px;
-        vertical-align: middle;
-    }
+    <main class="contenido-principal">
 
-    .texto-descripcion {
-        display: -webkit-box;
-        -webkit-box-orient: vertical;
-        -webkit-line-clamp: 2;
-        overflow: hidden;
-        overflow-wrap: anywhere;
-    }
+        <h2>Buscar y ordenar tareas</h2>
 
-    .texto-descripcion.expandido {
-        display: block;
-        overflow: visible;
-    }
+        <form th:action="@{/gestor-de-tareas/tareas}" method="get">
 
-    .boton-descripcion {
-        background: none;
-        border: none;
-        color: #c55160;
-        cursor: pointer;
-        padding: 4px 0;
-        font-size: 13px;
-        font-weight: bold;
-    }
+            <label>Buscar por título:</label>
+            <input type="text"
+                   name="titulo"
+                   placeholder="Escribe un título..."
+                   th:value="${titulo}">
 
-    table {
-        border-collapse: collapse;
-        width: 100%;
-    }
+            <br><br>
 
-    th, td {
-        padding: 12px 10px;
-        text-align: left;
-    }
+            <div class="contenedor-filtros">
+                <select id="tipoFiltro" name="criterioFiltro" onchange="cambiarOpciones()">
+                    <option value="">Filtrar por...</option>
 
-    th {
-        background-color: #c55160;
-        color: #ecd4d4;
-    }
+                    <option value="categoria" th:selected="${criterioFiltro == 'categoria'}">
+                        Categoría
+                    </option>
 
-    td {
-        background-color: whitesmoke;
-    }
+                    <option value="prioridad" th:selected="${criterioFiltro == 'prioridad'}">
+                        Prioridad
+                    </option>
 
-    tr {
-        border-bottom: 1px solid #cccccc;
-    }
+                    <option value="estado" th:selected="${criterioFiltro == 'estado'}">
+                        Estado
+                    </option>
 
-    .boton {
-        display: inline-block;
-        background-color: #c55160;
-        color: white;
-        text-decoration: none;
-        padding: 10px 18px;
-        border-radius: 8px;
-        margin: 5px;
-        border: none;
-        font-size: 16px;
-    }
+                </select>
 
-    .boton:hover {
-        background-color: #a83e4d;
-    }
+                <select id="opcionFiltro" name="valorFiltro" th:attr="data-seleccionado=${valorFiltro}">
+                    <option value="">Selecciona una opción</option>
+                </select>
 
-    .boton-pequeno {
-        padding: 5px 10px;
-        font-size: 15px;
-    }
+                <select id="opcionesCategoria" hidden>
+                    <option th:each="categoria : ${categorias}" th:value="${categoria.id}" th:text="${categoria.nombre}"></option>
+                </select>
 
-    input {
-        background-color: white;
-        border: 1px solid #c55160;
-        border-radius: 8px;
-        padding: 10px;
-        font-size: 15px;
-        outline: none;
-    }
+                <select id="opcionesPrioridad" hidden>
+                    <option th:each="p : ${T(com.example.Gestor_de_tareas.modelo.Prioridad).values()}" th:value="${p.name()}" th:text="${p}"></option>
+                </select>
 
-    select {
-        background-color: white;
-        border: 1px solid #c55160;
-        border-radius: 8px;
-        padding: 10px;
-        font-size: 15px;
-        cursor: pointer;
-    }
-
-    label {
-        font-size: 20px;
-    }
-</style>
-
-<h2>Buscar y ordenar tareas</h2>
-
-<form th:action="@{/gestor-de-tareas/tareas}" method="get">
-
-    <label>Buscar por título:</label>
-    <input type="text"
-           name="titulo"
-           placeholder="Escribe un título..."
-           th:value="${titulo}">
-
-    <br><br>
-
-    <label>Ordenar por:</label>
-    <select name="criterioOrden">
-        <option value="titulo" th:selected="${criterioOrden == 'titulo'}">
-            Título
-        </option>
-
-        <option value="fecha" th:selected="${criterioOrden == 'fecha'}">
-            Fecha límite
-        </option>
-
-        <option value="prioridad" th:selected="${criterioOrden == 'prioridad'}">
-            Prioridad
-        </option>
-
-        <option value="categoria" th:selected="${criterioOrden == 'categoria'}">
-            Categoría
-        </option>
-
-        <option value="estado" th:selected="${criterioOrden == 'estado'}">
-            Estado
-        </option>
-
-    </select>
-
-    <br><br>
-
-    <label>Dirección:</label>
-    <select name="direccionOrden">
-        <option value="asc" th:selected="${direccionOrden == 'asc'}">
-            Ascendente
-        </option>
-
-        <option value="desc" th:selected="${direccionOrden == 'desc'}">
-            Descendente
-        </option>
-
-    </select>
-
-    <br><br>
-
-    <button type="submit" class="boton">Buscar y ordenar</button>
-
-    <a class="boton" th:href="@{/gestor-de-tareas/tareas}">
-        Limpiar
-    </a>
-
-</form>
-
-</form>
-<hr>
-
-<p th:if="${#lists.isEmpty(tareas)}">
-    No hay tareas registradas.
-</p>
-
-<table th:unless="${#lists.isEmpty(tareas)}">
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Título</th>
-        <th>Descripción</th>
-        <th>Estado</th>
-        <th>Prioridad</th>
-        <th>Fecha límite</th>
-        <th>Acciones</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    <tr th:each="tarea : ${tareas}">
-        <td th:text="${tarea.id}"></td>
-        <td th:text="${tarea.titulo}"></td>
-        <td class="descripcion">
-            <div class="texto-descripcion"
-                 th:text="${tarea.descripcion}">
+                <select id="opcionesEstado" hidden>
+                    <option th:each="e : ${T(com.example.Gestor_de_tareas.modelo.EstadoTarea).values()}" th:value="${e.name()}" th:text="${#strings.replace(e.name(), '_', ' ')}"></option>
+                </select>
             </div>
-            <button type="button" class="boton-descripcion" onclick="mostrarDescripcion(this)">
-                Ver más
-            </button>
-        </td>
-        <td th:text="${#strings.replace(tarea.estado.name(), '_', ' ')}"></td>
-        <td th:text="${tarea.prioridad}"></td>
-        <td th:text="${tarea.fechaLimite}"></td>
 
-        <td>
-            <form th:action="@{/gestor-de-tareas/tareas/estado}" method="post">
-                <input type="hidden" name="id" th:value="${tarea.id}">
-                <select name="estado">
-                    <option th:each="e : ${T(com.example.Gestor_de_tareas.modelo.EstadoTarea).values()}"
-                            th:value="${e}"
-                            th:text="${#strings.replace(e.name(), '_', ' ')}"
-                            th:selected="${e == tarea.estado}">
-                    </option>
-                </select>
-                <button type="submit" class="boton boton-pequeno">Cambiar estado</button>
-            </form>
-            <form th:action="@{/gestor-de-tareas/tareas/usuario}" method="post">
-                <input type="hidden" name="id" th:value="${tarea.id}">
-                <select name="usuarioId">
-                    <option value="">Sin asignar</option>
-                    <option th:each="usuario : ${usuarios}"
-                            th:value="${usuario.id}"
-                            th:text="   ${usuario.nombre}"
-                            th:selected="${tarea.usuario != null and usuario.id == tarea.usuario.id}">
-                    </option>
-                </select>
-                <button type="submit" class="boton boton-pequeno">Asignar usuario</button>
-            </form>
-            <form th:action="@{/gestor-de-tareas/tareas/editar/{id}(id=${tarea.id})}" method="get">
-                <button type="submit" class="boton boton-pequeno">Editar</button>
-            </form>
-            <form th:action="@{/gestor-de-tareas/tareas/eliminar}" method="post">
-                <input type="hidden" name="id" th:value="${tarea.id}">
-                <button type="submit" class="boton boton-pequeno">Eliminar</button>
-            </form>
-        </td>
-    </tr>
-    </tbody>
-</table>
-<br>
-<a class="boton" th:href="@{/gestor-de-tareas/tareas/nueva}">Crear tarea</a>
-<a class="boton" th:href="@{/gestor-de-tareas}">Volver al inicio</a>
+            <br>
 
-<script>
-    function mostrarDescripcion(boton) {
-        const texto = boton.previousElementSibling;
+            <label>Ordenar por:</label>
+            <select name="criterioOrden">
+                <option value="id" th:selected="${criterioOrden == 'id'}">
+                    ID
+                </option>
 
-        texto.classList.toggle("expandido");
+                <option value="titulo" th:selected="${criterioOrden == 'titulo'}">
+                    Título
+                </option>
 
-        if (texto.classList.contains("expandido")) {
-            boton.textContent = "Ver menos";
-        } else {
-            boton.textContent = "Ver más";
-        }
-    }
-</script>
+                <option value="fecha" th:selected="${criterioOrden == 'fecha'}">
+                    Fecha límite
+                </option>
 
-<script>
-    function comprobarDescripciones() {
-        document.querySelectorAll(".texto-descripcion").forEach(texto => {
+                <option value="prioridad" th:selected="${criterioOrden == 'prioridad'}">
+                    Prioridad
+                </option>
 
-            const boton = texto.nextElementSibling;
+                <option value="categoria" th:selected="${criterioOrden == 'categoria'}">
+                    Categoría
+                </option>
 
-            if (texto.scrollHeight > texto.clientHeight) {
-                boton.style.display = "inline-block";
-            } else {
-                boton.style.display = "none";
+                <option value="estado" th:selected="${criterioOrden == 'estado'}">
+                    Estado
+                </option>
+
+            </select>
+
+            <br><br>
+
+            <label>Dirección:</label>
+            <select name="direccionOrden">
+                <option value="asc" th:selected="${direccionOrden == 'asc'}">
+                    Ascendente
+                </option>
+
+                <option value="desc" th:selected="${direccionOrden == 'desc'}">
+                    Descendente
+                </option>
+
+            </select>
+
+            <br><br>
+
+            <button type="submit" class="boton">Buscar y ordenar</button>
+
+            <a class="boton" th:href="@{/gestor-de-tareas/tareas(criterioOrden='id', direccionOrden='asc')}">
+                Limpiar
+            </a>
+        </form>
+
+        <hr>
+
+        <p th:if="${#lists.isEmpty(tareas)}">
+            No hay tareas registradas.
+        </p>
+
+        <table th:unless="${#lists.isEmpty(tareas)}">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Título</th>
+                <th>Descripción</th>
+                <th>Estado</th>
+                <th>Prioridad</th>
+                <th>Fecha límite</th>
+                <th>Acciones</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="tarea : ${tareas}">
+                <td th:text="${tarea.id}"></td>
+                <td th:text="${tarea.titulo}"></td>
+                <td class="descripcion">
+                    <div class="texto-descripcion"
+                         th:text="${tarea.descripcion}">
+                    </div>
+                    <button type="button" class="boton-descripcion" onclick="mostrarDescripcion(this)">
+                        Ver más
+                    </button>
+                </td>
+                <td th:text="${#strings.replace(tarea.estado.name(), '_', ' ')}"></td>
+                <td th:text="${tarea.prioridad}"></td>
+                <td th:text="${tarea.fechaLimite}"></td>
+
+                <td>
+                    <form th:action="@{/gestor-de-tareas/tareas/estado}" method="post">
+                        <input type="hidden" name="id" th:value="${tarea.id}">
+                        <select name="estado">
+                            <option th:each="e : ${T(com.example.Gestor_de_tareas.modelo.EstadoTarea).values()}"
+                                    th:value="${e}"
+                                    th:text="${#strings.replace(e.name(), '_', ' ')}"
+                                    th:selected="${e == tarea.estado}">
+                            </option>
+                        </select>
+                        <button type="submit" class="boton boton-pequeno">Cambiar estado</button>
+                    </form>
+                    <form th:action="@{/gestor-de-tareas/tareas/usuario}" method="post">
+                        <input type="hidden" name="id" th:value="${tarea.id}">
+                        <select name="usuarioId">
+                            <option value="">Sin asignar</option>
+                            <option th:each="usuario : ${usuarios}"
+                                    th:value="${usuario.id}"
+                                    th:text="   ${usuario.nombre}"
+                                    th:selected="${tarea.usuario != null and usuario.id == tarea.usuario.id}">
+                            </option>
+                        </select>
+                        <button type="submit" class="boton boton-pequeno">Asignar usuario</button>
+                    </form>
+                    <form th:action="@{/gestor-de-tareas/tareas/editar/{id}(id=${tarea.id})}" method="get">
+                        <button type="submit" class="boton boton-pequeno">Editar</button>
+                    </form>
+                    <form th:action="@{/gestor-de-tareas/tareas/eliminar}" method="post">
+                        <input type="hidden" name="id" th:value="${tarea.id}">
+                        <button type="submit" class="boton boton-pequeno">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <br>
+        <a class="boton" th:href="@{/gestor-de-tareas/tareas/nueva}">Crear tarea</a>
+        <a class="boton" th:href="@{/gestor-de-tareas}">Volver al inicio</a>
+
+        <script>
+            function mostrarDescripcion(boton) {
+                const texto = boton.previousElementSibling;
+
+                texto.classList.toggle("expandido");
+
+                if (texto.classList.contains("expandido")) {
+                    boton.textContent = "Ver menos";
+                } else {
+                    boton.textContent = "Ver más";
+                }
             }
-        });
-    }
+        </script>
 
-    window.addEventListener("load", comprobarDescripciones);
-</script>
+        <script>
+            function comprobarDescripciones() {
+                document.querySelectorAll(".texto-descripcion").forEach(texto => {
+
+                    const boton = texto.nextElementSibling;
+
+                    if (texto.scrollHeight > texto.clientHeight) {
+                        boton.style.display = "inline-block";
+                    } else {
+                        boton.style.display = "none";
+                    }
+                });
+            }
+
+            window.addEventListener("load", comprobarDescripciones);
+        </script>
+
+        <script th:src="@{/js/filtros.js}"></script>
+
+    </main>
+
+</div>
+<script th:src="@{/js/sidebar.js}"></script>
 </body>
 </html>

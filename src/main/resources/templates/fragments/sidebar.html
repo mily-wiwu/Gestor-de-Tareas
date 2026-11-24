@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/sidebar.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <title>Title</title>
+</head>
+<body>
+
+<aside th:fragment="sidebar" class="barra-lateral">
+
+    <div class="titulo-sidebar">
+        <div class="cabecera-sidebar">
+            <h2>Organiza tu día</h2>
+
+            <button type="button"
+                    id="botonSidebar"
+                    class="boton-sidebar">
+                ☰
+            </button>
+        </div>
+    </div>
+
+    <nav class="navegacion">
+
+        <a th:href="@{/gestor-de-tareas}" class="enlace-nav">
+            <span>⌂</span>
+            <span class="texto-nav">Inicio</span>
+        </a>
+
+        <div class="grupo-nav">
+            <a th:href="@{/gestor-de-tareas/tareas}" class="enlace-nav">
+                <span>▤</span>
+                <span class="texto-nav">Tareas</span>
+            </a>
+
+            <div class="subnav">
+                <a th:href="@{/gestor-de-tareas/tareas}">
+                    <span class="texto-nav">Ver tareas</span>
+                </a>
+
+                <a th:href="@{/gestor-de-tareas/tareas/nueva}">
+                    <span class="texto-nav">Crear tarea</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="grupo-nav">
+            <a th:href="@{/gestor-de-tareas/categorias}" class="enlace-nav">
+                <span>▣</span>
+                <span class="texto-nav">Categorías</span>
+            </a>
+
+            <div class="subnav">
+                <a th:href="@{/gestor-de-tareas/categorias}">
+                     <span class="texto-nav">Ver categorías</span>
+                </a>
+
+                <a th:href="@{/gestor-de-tareas/categorias/nueva}">
+                    <span class="texto-nav">Crear categoría</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="grupo-nav">
+            <a th:href="@{/gestor-de-tareas/usuarios}" class="enlace-nav">
+                <span>♙</span>
+                <span class="texto-nav">Usuarios</span>
+            </a>
+
+            <div class="subnav">
+                <a th:href="@{/gestor-de-tareas/usuarios}">
+                    <span class="texto-nav">Ver usuarios</span>
+                </a>
+
+                <a th:href="@{/gestor-de-tareas/usuarios/nuevo}">
+                    <span class="texto-nav">Crear usuario</span>
+                </a>
+            </div>
+        </div>
+
+    </nav>
+
+</aside>
+
+</body>
+</html>

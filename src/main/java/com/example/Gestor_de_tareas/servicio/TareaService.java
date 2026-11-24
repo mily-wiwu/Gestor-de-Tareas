@@ -49,8 +49,8 @@ public class TareaService {
         tareaDAO.actualizarEstado(id, estado);
     }
 
-    public List<Tarea> buscarTareas(String titulo, Integer idCategoria, Prioridad prioridad, EstadoTarea estado, String criterioOrden, String direccionOrden) {
-        return tareaDAO.buscarConFiltros(titulo, idCategoria, prioridad, estado, criterioOrden, direccionOrden);
+    public List<Tarea> buscarTareas(String titulo, String criterioFiltro, String valorFiltro, String criterioOrden, String direccionOrden) {
+        return tareaDAO.buscarConFiltros(titulo, criterioFiltro, valorFiltro, criterioOrden, direccionOrden);
     }
 
     public SituacionTemporal diasRestantes(Tarea tarea, EstadoTarea estadoTarea) {

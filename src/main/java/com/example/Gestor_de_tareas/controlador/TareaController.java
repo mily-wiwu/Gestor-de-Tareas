@@ -24,18 +24,18 @@
         }
 
         @GetMapping("/gestor-de-tareas/tareas")
-        public String verTarea(@RequestParam(required = false) String titulo, @RequestParam(required = false) Integer idCategoria, @RequestParam(required = false) Prioridad prioridad, @RequestParam(required = false) EstadoTarea estado, @RequestParam(defaultValue = "fecha") String criterioOrden, @RequestParam(defaultValue = "asc") String direccionOrden, Model model) {
-            List<Tarea> tareas = tareaService.buscarTareas(titulo, idCategoria, prioridad, estado, criterioOrden, direccionOrden);
+        public String verTarea(@RequestParam(required = false) String titulo, @RequestParam(required = false) String criterioFiltro, @RequestParam(required = false) String valorFiltro, @RequestParam(defaultValue = "id") String criterioOrden, @RequestParam(defaultValue = "asc") String direccionOrden, Model model) {
+            List<Tarea> tareas = tareaService.buscarTareas(titulo, criterioFiltro, valorFiltro, criterioOrden, direccionOrden);
 
             model.addAttribute("tareas", tareas);
             model.addAttribute("categorias", categoriaService.listarCategorias());
             model.addAttribute("usuarios", usuarioService.listarUsuarios());
             model.addAttribute("titulo", titulo);
-            model.addAttribute("idCategoria", idCategoria);
-            model.addAttribute("prioridadSeleccionada", prioridad);
-            model.addAttribute("estadoSeleccionado", estado);
+            model.addAttribute("criterioFiltro", criterioFiltro);
+            model.addAttribute("valorFiltro", valorFiltro);
             model.addAttribute("criterioOrden", criterioOrden);
             model.addAttribute("direccionOrden", direccionOrden);
+
             return "tareas";
         }
 
