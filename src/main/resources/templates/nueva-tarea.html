@@ -46,11 +46,29 @@
 
             <br><br>
 
-            <label for="fechaLimite">Fecha límite:</label>
+            <label for="tipoAsignacionFecha">Tipo de asignación de fecha:</label>
             <br>
-            <input type="date" id="fechaLimite" name="fechaLimite" required>
+            <select id="tipoAsignacionFecha" name="tipoAsignacionFecha" required>
+                <option value="">Selecciona una modalidad</option>
+                <option value="FECHA_LIMITE">Fecha límite</option>
+                <option value="DIA_ESPECIFICO">Día específico</option>
+            </select>
 
             <br><br>
+
+            <div id="campoFechaLimite" style="display: none;">
+                <label for="fechaLimite">Fecha límite:</label>
+                <br>
+                <input type="date" id="fechaLimite" name="fechaLimite">
+            </div>
+
+            <div id="campoFechaProgramada" style="display: none;">
+                <label for="fechaProgramada">Día específico:</label>
+                <br>
+                <input type="date" id="fechaProgramada" name="fechaProgramada">
+            </div>
+
+            <br>
 
             <label for="prioridad">Prioridad:</label>
             <br>
@@ -83,6 +101,7 @@
     </main>
 
 </div>
+<script th:src="@{/js/fecha-tarea.js}"></script>
 <script th:src="@{/js/sidebar.js}"></script>
 </body>
 </html>

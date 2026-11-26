@@ -8,8 +8,8 @@
     import org.springframework.web.bind.annotation.PostMapping;
     import org.springframework.web.bind.annotation.RequestParam;
     import com.example.Gestor_de_tareas.modelo.*;
-    import java.time.LocalDate;
-    import java.util.List;
+    import java.util.*;
+    import java.time.*;
 
     @Controller
     public class TareaController {
@@ -49,7 +49,7 @@
 
 
         @PostMapping("/gestor-de-tareas/tareas/nueva")
-        public String crearTarea(@RequestParam String titulo, @RequestParam String descripcion, @RequestParam int idCategoria, @RequestParam LocalDate fechaLimite, @RequestParam Prioridad prioridad, @RequestParam(required = false) String usuarioId) {
+        public String crearTarea(@RequestParam String titulo, @RequestParam String descripcion, @RequestParam int idCategoria, @RequestParam(required = false) LocalDate fechaLimite, @RequestParam TipoAsignacionFecha tipoAsignacionFecha, @RequestParam(required = false) LocalDate fechaProgramada, @RequestParam Prioridad prioridad, @RequestParam(required = false) String usuarioId) {
             Categoria categoria = categoriaService.buscarCategoria(idCategoria);
             LocalDate fechaCreacion = LocalDate.now();
             EstadoTarea estado = EstadoTarea.PENDIENTE;
@@ -58,7 +58,7 @@
                 usuario = usuarioService.buscarUsuario(usuarioId);
             }
 
-            Tarea tarea = new Tarea(0, titulo, descripcion, fechaCreacion, fechaLimite, estado, prioridad, categoria, usuario);
+            Tarea tarea = new Tarea(0, titulo, descripcion, fechaCreacion, fechaLimite, tipoAsignacionFecha, fechaProgramada, estado, prioridad, categoria, usuario);
 
             boolean guardada = tareaService.agregarTarea(tarea);
             System.out.println("¿Se guardó?: " + guardada);
@@ -83,11 +83,11 @@
         }
 
         @PostMapping("/gestor-de-tareas/tareas/editar")
-        public String editarTarea(@RequestParam int id, @RequestParam String titulo, @RequestParam String descripcion, @RequestParam LocalDate fechaLimite, @RequestParam Prioridad prioridad, @RequestParam int idCategoria) {
+        public String editarTarea(@RequestParam int id, @RequestParam String titulo, @RequestParam String descripcion, @RequestParam(required = false) LocalDate fechaLimite, @RequestParam TipoAsignacionFecha tipoAsignacionFecha, @RequestParam(required = false) LocalDate fechaProgramada, @RequestParam Prioridad prioridad, @RequestParam int idCategoria) {
             Tarea original = tareaService.buscarTarea(id);
             Categoria categoria = categoriaService.buscarCategoria(idCategoria);
 
-            Tarea tareaActualizada = new Tarea(original.getId(), titulo, descripcion, original.getFechaCreacion(), fechaLimite, original.getEstado(), prioridad, categoria, original.getUsuario());
+            Tarea tareaActualizada = new Tarea(original.getId(), titulo, descripcion, original.getFechaCreacion(), fechaLimite, tipoAsignacionFecha, fechaProgramada, original.getEstado(), prioridad, categoria, original.getUsuario());
             tareaService.modificarTarea(tareaActualizada);
 
             return "redirect:/gestor-de-tareas/tareas";
@@ -110,5 +110,12 @@
             tareaService.asignarUsuario(id, usuario);
 
             return "redirect:/gestor-de-tareas/tareas";
+        }
+
+        @GetMapping("/gestor-de-tareas/tareas/activas")
+        public String listarTareasActivas(Model model) {
+            model.addAttribute("tareas", tareaService.listarActivas());
+            model.addAttribute("usuarios", usuarioService.listarUsuarios());
+            return "tareas-activas";
         }
     }

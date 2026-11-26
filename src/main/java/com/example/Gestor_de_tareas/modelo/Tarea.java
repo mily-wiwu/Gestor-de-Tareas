@@ -10,18 +10,21 @@ public class Tarea {
     private String descripcion;
     private LocalDate fechaCreacion;
     private LocalDate fechaLimite;
+    private TipoAsignacionFecha tipoAsignacionFecha;
+    private LocalDate fechaProgramada;
     private EstadoTarea estado;
     private Prioridad prioridad;
     private Categoria categoria;
-    private Set<Tarea> tareas;
     private Usuario usuario;
 
-    public Tarea(int id, String titulo, String descripcion, LocalDate fechaCreacion, LocalDate fechaLimite, EstadoTarea estado, Prioridad prioridad, Categoria categoria, Usuario usuario) {
+    public Tarea(int id, String titulo, String descripcion, LocalDate fechaCreacion, LocalDate fechaLimite, TipoAsignacionFecha tipoAsignacionFecha, LocalDate fechaProgramada, EstadoTarea estado, Prioridad prioridad, Categoria categoria, Usuario usuario) {
         this.id = id;
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.fechaCreacion = fechaCreacion;
         this.fechaLimite = fechaLimite;
+        this.tipoAsignacionFecha = tipoAsignacionFecha;
+        this.fechaProgramada = fechaProgramada;
         this.estado = estado;
         this.prioridad = prioridad;
         this.categoria = categoria;
@@ -60,18 +63,6 @@ public class Tarea {
         return categoria;
     }
 
-    public void completar() {
-        estado = EstadoTarea.COMPLETADA;
-    }
-
-    public void cancelar() {
-        estado = EstadoTarea.CANCELADA;
-    }
-
-    public void empezar() {
-        estado = EstadoTarea.EN_PROGRESO;
-    }
-
     public void setTitulo(String titulo) {
         if (titulo == null || titulo.isBlank()) {
             throw new TareaInvalidaException("El título no puede estar vacío");
@@ -107,10 +98,6 @@ public class Tarea {
         this.id = id;
     }
 
-    public void setFechaCreacion(LocalDate fechaCreacion) {
-        this.fechaCreacion = fechaCreacion;
-    }
-
     public void setCategoria(Categoria categoria) {
         if (categoria == null) {
             throw new TareaInvalidaException("Debe seleccionar una categoría");
@@ -126,27 +113,6 @@ public class Tarea {
         this.usuario = usuario;
     }
 
-    public SituacionTemporal getSituacionTemporal() {
-        SituacionTemporal situacion;
-        if (fechaLimite.isBefore(LocalDate.now())) {
-            situacion = SituacionTemporal.VENCIDA;
-        } else if (fechaLimite.equals(LocalDate.now())) {
-            situacion = SituacionTemporal.VENCE_HOY;
-        } else if (!fechaLimite.isBefore(LocalDate.now()) && !fechaLimite.isAfter(LocalDate.now().plusDays(3))) {
-            situacion = SituacionTemporal.PROXIMA_A_VENCER;
-        } else {
-            situacion = SituacionTemporal.EN_PLAZO;
-        }
-        return situacion;
-    }
-
-    public long diasRestantes() {
-        return ChronoUnit.DAYS.between(LocalDate.now(), fechaLimite);
-    }
-
-    public boolean esFutura() {
-        return fechaLimite.isAfter(LocalDate.now());
-    }
 
     public Usuario getUsuario(){
         return usuario;
@@ -170,6 +136,22 @@ public class Tarea {
         if (!(o instanceof Tarea)) return false;
         Tarea tarea = (Tarea) o;
         return id == tarea.id;
+    }
+
+    public TipoAsignacionFecha getTipoAsignacionFecha() {
+        return tipoAsignacionFecha;
+    }
+
+    public void setTipoAsignacionFecha(TipoAsignacionFecha tipoAsignacionFecha) {
+        this.tipoAsignacionFecha = tipoAsignacionFecha;
+    }
+
+    public LocalDate getFechaProgramada() {
+        return fechaProgramada;
+    }
+
+    public void setFechaProgramada(LocalDate fechaProgramada) {
+        this.fechaProgramada = fechaProgramada;
     }
 
     @Override

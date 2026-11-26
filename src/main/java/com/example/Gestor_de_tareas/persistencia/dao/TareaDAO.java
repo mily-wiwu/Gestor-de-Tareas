@@ -14,20 +14,38 @@ import java.util.Optional;
 @Repository
 public class TareaDAO {
     public boolean guardar(Tarea t) {
+
         if (t == null ||
                 t.getCategoria() == null ||
                 t.getFechaCreacion() == null ||
-                t.getFechaLimite() == null ||
+                t.getTipoAsignacionFecha() == null ||
                 t.getEstado() == null ||
-                t.getPrioridad() == null) {
+                t.getPrioridad() == null ||
+                t.getTitulo() == null ||
+                t.getTitulo().isBlank()) {
+
             throw new IllegalArgumentException("Tarea inválida");
+        }
+
+        if (t.getTipoAsignacionFecha() == TipoAsignacionFecha.FECHA_LIMITE) {
+
+            if (t.getFechaLimite() == null || t.getFechaProgramada() != null) {
+                throw new IllegalArgumentException("Fecha límite inválida");
+            }
+
+        } else if (t.getTipoAsignacionFecha() == TipoAsignacionFecha.DIA_ESPECIFICO) {
+
+            if (t.getFechaProgramada() == null || t.getFechaLimite() != null) {
+                throw new IllegalArgumentException("Fecha programada inválida");
+            }
         }
 
         String sql = """
         INSERT INTO tarea(
-        titulo, descripcion, fechaCreacion, fechaLimite,
-        estado, prioridad, categoria_id, usuario_id
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            titulo, descripcion, fechaCreacion, fechaLimite,
+            tipoAsignacionFecha, fechaProgramada,
+            estado, prioridad, categoria_id, usuario_id
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """;
 
         try (Connection conn = ConexionSQLite.conectar();
@@ -36,15 +54,29 @@ public class TareaDAO {
             ps.setString(1, t.getTitulo());
             ps.setString(2, t.getDescripcion());
             ps.setString(3, t.getFechaCreacion().toString());
-            ps.setString(4, t.getFechaLimite().toString());
-            ps.setString(5, t.getEstado().name());
-            ps.setString(6, t.getPrioridad().name());
-            ps.setInt(7, t.getCategoria().getId());
+
+            if (t.getFechaLimite() == null) {
+                ps.setNull(4, Types.VARCHAR);
+            } else {
+                ps.setString(4, t.getFechaLimite().toString());
+            }
+
+            ps.setString(5, t.getTipoAsignacionFecha().name());
+
+            if (t.getFechaProgramada() == null) {
+                ps.setNull(6, Types.VARCHAR);
+            } else {
+                ps.setString(6, t.getFechaProgramada().toString());
+            }
+
+            ps.setString(7, t.getEstado().name());
+            ps.setString(8, t.getPrioridad().name());
+            ps.setInt(9, t.getCategoria().getId());
 
             if (t.getUsuario() == null) {
-                ps.setNull(8, Types.INTEGER);
+                ps.setNull(10, Types.VARCHAR);
             } else {
-                ps.setString(8, t.getUsuario().getId());
+                ps.setString(10, t.getUsuario().getId());
             }
 
             ps.executeUpdate();
@@ -100,42 +132,6 @@ public class TareaDAO {
         }
     }
 
-    public List<Tarea> buscarPorEstado(EstadoTarea estado){
-        List<Tarea> lista = new ArrayList<>();
-        String sql = consultaConJoin() + " WHERE t.estado = ?";
-
-        try (Connection conn = ConexionSQLite.conectar(); PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setString(1, estado.name());
-
-            try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) {
-                    lista.add(mapear(rs));
-                }
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        return lista;
-    }
-
-    public List<Tarea> buscarPorPrioridad(Prioridad prioridad){
-        List<Tarea> lista = new ArrayList<>();
-        String sql = consultaConJoin() + " WHERE t.prioridad = ?";
-
-        try (Connection conn = ConexionSQLite.conectar(); PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setString(1, prioridad.name());
-
-            try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) {
-                    lista.add(mapear(rs));
-                }
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        return lista;
-    }
-
     private Tarea mapear(ResultSet rs) throws SQLException {
         Categoria categoria = null;
         Usuario usuario = null;
@@ -148,16 +144,34 @@ public class TareaDAO {
             usuario = new Usuario(rs.getString("usuario_id"), rs.getString("usuario_nombre"));
         }
 
+        String fechaLimite = rs.getString("fechaLimite");
+        String fechaProgramada = rs.getString("fechaProgramada");
 
-        return new Tarea(rs.getInt("id"), rs.getString("titulo"), rs.getString("descripcion"), LocalDate.parse(rs.getString("fechaCreacion")), LocalDate.parse(rs.getString("fechaLimite")), EstadoTarea.valueOf(rs.getString("estado")), Prioridad.valueOf(rs.getString("prioridad")), categoria, usuario);
+        return new Tarea(rs.getInt("id"), rs.getString("titulo"), rs.getString("descripcion"), LocalDate.parse(rs.getString("fechaCreacion")), fechaLimite != null ? LocalDate.parse(fechaLimite) : null, TipoAsignacionFecha.valueOf(rs.getString("tipoAsignacionFecha")), fechaProgramada != null ? LocalDate.parse(fechaProgramada) : null, EstadoTarea.valueOf(rs.getString("estado")), Prioridad.valueOf(rs.getString("prioridad")), categoria, usuario);
     }
 
     public void actualizar(Tarea t) {
+
+        if (t.getTipoAsignacionFecha() == TipoAsignacionFecha.FECHA_LIMITE) {
+
+            if (t.getFechaLimite() == null || t.getFechaProgramada() != null) {
+                throw new IllegalArgumentException("Fecha límite inválida");
+            }
+
+        } else if (t.getTipoAsignacionFecha() == TipoAsignacionFecha.DIA_ESPECIFICO) {
+
+            if (t.getFechaProgramada() == null || t.getFechaLimite() != null) {
+                throw new IllegalArgumentException("Fecha programada inválida");
+            }
+        }
+
         String sql = """
         UPDATE tarea
         SET titulo = ?,
             descripcion = ?,
             fechaLimite = ?,
+            tipoAsignacionFecha = ?,
+            fechaProgramada = ?,
             prioridad = ?,
             categoria_id = ?,
             usuario_id = ?
@@ -169,137 +183,40 @@ public class TareaDAO {
 
             ps.setString(1, t.getTitulo());
             ps.setString(2, t.getDescripcion());
-            ps.setString(3, t.getFechaLimite().toString());
-            ps.setString(4, t.getPrioridad().name());
-            ps.setInt(5, t.getCategoria().getId());
 
-            if (t.getUsuario() == null) {
-                ps.setNull(6, Types.VARCHAR);
+            if (t.getFechaLimite() == null) {
+                ps.setNull(3, Types.VARCHAR);
             } else {
-                ps.setString(6, t.getUsuario().getId());
+                ps.setString(3, t.getFechaLimite().toString());
             }
 
-            ps.setInt(7, t.getId());
+            ps.setString(4, t.getTipoAsignacionFecha().name());
+
+            if (t.getFechaProgramada() == null) {
+                ps.setNull(5, Types.VARCHAR);
+            } else {
+                ps.setString(5, t.getFechaProgramada().toString());
+            }
+
+            ps.setString(6, t.getPrioridad().name());
+            ps.setInt(7, t.getCategoria().getId());
+
+            if (t.getUsuario() == null) {
+                ps.setNull(8, Types.VARCHAR);
+            } else {
+                ps.setString(8, t.getUsuario().getId());
+            }
+
+            ps.setInt(9, t.getId());
 
             if (ps.executeUpdate() == 0) {
-                throw new TareaNoEncontradaException(
-                        "No existe una tarea con ID " + t.getId());
+                throw new TareaNoEncontradaException("No existe una tarea con ID " + t.getId());
             }
 
         } catch (SQLException e) {
             throw new RuntimeException("Error al actualizar la tarea.", e);
         }
     }
-
-    public List<Tarea> buscarPorCategoria(int idCategoria) {
-        List<Tarea> lista = new ArrayList<>();
-        String sql = consultaConJoin() + " WHERE t.categoria_id = ?";
-
-        try (Connection conn = ConexionSQLite.conectar(); PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setInt(1, idCategoria);
-
-            try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) {
-                    lista.add(mapear(rs));
-                }
-            }
-
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-        return lista;
-    }
-
-    public int contadorEstado(EstadoTarea estado) {
-        String sql = "SELECT COUNT(*) FROM tarea WHERE estado = ?";
-
-        try (Connection conn = ConexionSQLite.conectar(); PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setString(1, estado.name());
-
-            try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) {
-                    return rs.getInt(1);
-                }
-            }
-
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        return 0;
-    }
-
-    public int contadorPrioridad(Prioridad prioridad) {
-        String sql = "SELECT COUNT(*) FROM tarea WHERE prioridad = ?";
-
-        try (Connection conn = ConexionSQLite.conectar(); PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setString(1, prioridad.name());
-
-            try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) {
-                    return rs.getInt(1);
-                }
-            }
-
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        return 0;
-    }
-
-    public int contadorTareas() {
-        String sql = "SELECT COUNT(*) FROM tarea";
-
-        try (Connection conn = ConexionSQLite.conectar(); PreparedStatement ps = conn.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
-
-            if (rs.next()) {
-                return rs.getInt(1);
-            }
-
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        return 0;
-    }
-
-    public int contadorCategoria(int idCategoria) {
-        String sql = "SELECT COUNT(*) FROM tarea WHERE categoria_id = ?";
-
-        try (Connection conn = ConexionSQLite.conectar(); PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setInt(1, idCategoria);
-
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    return rs.getInt(1);
-                }
-            }
-
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-        return 0;
-    }
-
-    public int contadorUsuario(String idUsuario) {
-        String sql = "SELECT COUNT(*) FROM tarea WHERE usuario_id = ?";
-
-        try (Connection conn = ConexionSQLite.conectar(); PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setString(1, idUsuario);
-
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    return rs.getInt(1);
-                }
-            }
-
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-        return 0;
-    }
-
     public List<Tarea> buscarPorUsuario(int idUsuario) {
         List<Tarea> tareas = new ArrayList<>();
 
@@ -331,6 +248,8 @@ public class TareaDAO {
             t.descripcion,
             t.fechaCreacion,
             t.fechaLimite,
+            t.tipoAsignacionFecha,
+            t.fechaProgramada,
             t.estado,
             t.prioridad,
     
@@ -451,4 +370,25 @@ public class TareaDAO {
         } catch (SQLException e) {
             throw new RuntimeException("Error al buscar tareas.", e);
         }
-    }}
+    }
+
+    public List<Tarea> listarActivas() {
+        List<Tarea> lista = new ArrayList<>();
+
+        String sql = consultaConJoin() + " WHERE t.estado IN ('PENDIENTE', 'EN_PROGRESO')";
+
+        try (Connection conn = ConexionSQLite.conectar();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                lista.add(mapear(rs));
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        return lista;
+    }
+}

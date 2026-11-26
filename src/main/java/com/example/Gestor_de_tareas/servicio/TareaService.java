@@ -110,4 +110,12 @@ public class TareaService {
 
         return new EstadisticasTareas(tareasVencidas, tareasVenceHoy, tareasVenceProxima, tareasEnPlazo, tareasPendientes, tareasEnProgreso, tareasCompletadas, tareasCanceladas);
     }
+
+    public List<Tarea> listarActivas() {
+        return tareaDAO.listarActivas();
+    }
+
+    public List<Tarea> listarTareasCalendario() {
+        return tareaDAO.listarActivas();
+    }
 }
